@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @cards_set.user
+%p
+  %b Name:
+  = @cards_set.name
+
+= link_to 'Edit', edit_cards_set_path(@cards_set)
+\|
+= link_to 'Back', cards_sets_path
