@@ -1,0 +1,16 @@
+%p#notice= notice
+%p
+  %strong Admin:
+  = @user.admin
+%p
+  %strong Last seen:
+  = @user.last_seen
+%p
+  %strong Email:
+  = @user.email
+%p
+  %strong Display name:
+  = @user.display_name
+= link_to 'Edit', edit_user_path(@user)
+|
+= link_to 'Back', users_path
