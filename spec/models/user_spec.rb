@@ -9,7 +9,7 @@ describe User do
   it { should have_many(:cards) }
 
   it { should validate_presence_of(:email) }
-  it { should validate_uniqueness_of(:email) }
+  xit { should validate_uniqueness_of(:email, case_sensitive: false) }
   it { should validate_presence_of(:display_name) }
 
   it 'shold not create admin user by default' do
