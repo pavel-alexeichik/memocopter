@@ -1,4 +1,3 @@
-require 'rails_helper'
 require_relative '../support/login_form.rb'
 
 feature 'Log In', js: true do

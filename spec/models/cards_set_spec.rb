@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CardsSet do
   # it "should have valid factory" do
   #   FactoryGirl.build(:user).should be_valid

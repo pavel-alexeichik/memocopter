@@ -1,4 +1,3 @@
-require 'rails_helper'
 require_relative '../support/signup_form.rb'
 
 feature 'Sign Up' do
