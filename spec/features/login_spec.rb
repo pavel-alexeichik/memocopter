@@ -7,9 +7,8 @@ feature 'Log In', js: true do
   scenario 'login with valid user data' do
     expect(User.last.email).to eq(user.email)
     LoginForm.new.visit_page.fill_in_with(user).submit
-    using_wait_time(1) do
-      expect(page).to have_content('Dashboard')
-    end
+    wait_for_ajax
+    expect(page).to have_content('Dashboard')
   end
 
   scenario 'cannot login with invalid email' do
