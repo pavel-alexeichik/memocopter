@@ -12,9 +12,9 @@ feature 'Log In', js: true do
     end
   end
 
-  # scenario 'cannot sign up without email' do
-  #   user.email = ''
-  #   NewUserForm.new.visit_page.fill_in_with(user).submit
-  #   expect(page).to have_content("Email can't be blank")
-  # end
+  scenario 'cannot login with invalid email' do
+    user.email = 'not_working_email@example.com'
+    LoginForm.new.visit_page.fill_in_with(user).submit
+    expect(page).to have_content("Incorrect password or email")
+  end
 end
