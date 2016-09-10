@@ -1,11 +1,11 @@
 require 'rails_helper'
-require_relative '../support/new_user_form.rb'
+require_relative '../support/signup_form.rb'
 
 feature 'Sign Up' do
   let(:user) { FactoryGirl.build(:user) }
 
   scenario 'sign up with valid user data' do
-    NewUserForm.new.visit_page.fill_in_with(user).submit
+    SignupForm.new.visit_page.fill_in_with(user).submit
     expect(page).to have_content('Dashboard')
     created_user = User.last
     expect(created_user.email).to eq(user.email)
@@ -14,7 +14,10 @@ feature 'Sign Up' do
 
   scenario 'cannot sign up without email' do
     user.email = ''
-    NewUserForm.new.visit_page.fill_in_with(user).submit
+    SignupForm.new.visit_page.fill_in_with(user).submit
     expect(page).to have_content("Email can't be blank")
+  end
+
+  xscenario 'cannot sign up with existing email' do
   end
 end

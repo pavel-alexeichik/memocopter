@@ -55,6 +55,9 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'poltergeist'
+  gem 'database_cleaner'
+  # gem 'selenium-webdriver'
   # gem 'guard-rspec'
 end
 

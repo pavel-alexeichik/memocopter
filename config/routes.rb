@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     root 'home#landing', as: :unauthenticated
   end
 
-  devise_for :users, :skip => [:registrations]
+  devise_for :users, skip: [:registrations], controllers: {
+    sessions: 'sessions'
+  }
   devise_scope :user do
     post 'signup', to: 'devise/registrations#create', as: :user_registration
   end
