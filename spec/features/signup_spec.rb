@@ -18,6 +18,9 @@ feature 'Sign Up' do
     expect(page).to have_content("Email can't be blank")
   end
 
-  xscenario 'cannot sign up with existing email' do
+  scenario 'cannot sign up with existing email' do
+    user = FactoryGirl.create(:default_user)
+    SignupForm.new.visit_page.fill_in_with(user).submit
+    expect(page).to have_content("Email has already been taken")
   end
 end
