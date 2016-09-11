@@ -13,7 +13,6 @@
   %tbody
     - @cards.each do |card|
       %tr
-        %td= card.cards_set
         %td= card.question
         %td= card.answer
         %td= link_to 'Show', card

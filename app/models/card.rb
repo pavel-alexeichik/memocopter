@@ -1,5 +1,5 @@
 class Card < ApplicationRecord
-  belongs_to :cards_set
+  belongs_to :user
 
   validates :question, presence: true
   validates :answer, presence: true

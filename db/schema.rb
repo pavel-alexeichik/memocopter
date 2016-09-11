@@ -13,22 +13,15 @@
 ActiveRecord::Schema.define(version: 20160906113948) do
 
   create_table "cards", force: :cascade do |t|
-    t.string   "question",                     null: false
-    t.string   "answer",                       null: false
-    t.integer  "cards_set_id",                 null: false
-    t.boolean  "public",       default: false
-    t.integer  "position",     default: 0
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["cards_set_id"], name: "index_cards_on_cards_set_id"
-  end
-
-  create_table "cards_sets", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_cards_sets_on_user_id"
+    t.integer  "user_id",                    null: false
+    t.string   "question",                   null: false
+    t.string   "answer",                     null: false
+    t.boolean  "public",     default: false
+    t.integer  "position",   default: 0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["user_id"], name: "index_cards_on_user_id"
+    t.index [nil], name: "index_cards_on_user"
   end
 
   create_table "users", force: :cascade do |t|

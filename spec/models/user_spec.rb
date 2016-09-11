@@ -3,7 +3,6 @@ describe User do
   #   FactoryGirl.build(:user).should be_valid
   # end
 
-  it { should have_many(:cards_sets) }
   it { should have_many(:cards) }
 
   it { should validate_presence_of(:email) }

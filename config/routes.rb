@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   authenticated :user do #-> if user is logged in
     root 'home#dashboard', as: :dashboard
-    resources :cards_sets
     resources :cards
   end
 

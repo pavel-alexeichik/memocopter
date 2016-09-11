@@ -1,1 +1,0 @@
-json.array! @cards_sets, partial: 'cards_sets/cards_set', as: :cards_set
