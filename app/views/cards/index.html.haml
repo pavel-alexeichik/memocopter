@@ -12,10 +12,10 @@
         'data-modal-id': "#confirm-dialog" do
         %i.material-icons delete
 
-%div#confirm-dialog.modal
-  %div.modal-content
+#confirm-dialog.modal
+  .modal-content
     Are you sure?
-  %div.modal-footer
+  .modal-footer
     %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{href: "#!"} Close
     = link_to 'Delete', 'url-placeholder', method: :delete,
       class: 'modal-action waves-effect waves-green btn-flat confirm-success'
