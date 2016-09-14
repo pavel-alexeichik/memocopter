@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'simple_form'
+gem 'materialize-sass'
 
 gem 'devise'
 
