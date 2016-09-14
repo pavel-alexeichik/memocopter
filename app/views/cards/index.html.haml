@@ -1,23 +1,21 @@
-%h1 Listing cards
-
-%table
-  %thead
-    %tr
-      %th Question
-      %th Answer
-      %th
-      %th
-      %th
-
-  %tbody
-    - @cards.each do |card|
-      %tr
-        %td= card.question
-        %td= card.answer
-        %td= link_to 'Show', card
-        %td= link_to 'Edit', edit_card_path(card)
-        %td= link_to 'Destroy', card, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+%div
+  = link_to new_card_path, class: 'btn-large waves-effect waves-light' do
+    %i.material-icons add
+    %span.btn-text New card
 %br
 
-= link_to 'New Card', new_card_path
+%ul.collection.cards-collection
+  - @cards.each do |card|
+    %li.collection-item{"data-url": edit_card_path(card)}
+      = card.question
+      = link_to card, method: :delete, class: 'secondary-content confirmable',
+        'data-modal-id': "#confirm-dialog" do
+        %i.material-icons delete
+
+%div#confirm-dialog.modal
+  %div.modal-content
+    Are you sure?
+  %div.modal-footer
+    %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{href: "#!"} Close
+    = link_to 'Delete', 'url-placeholder', method: :delete,
+      class: 'modal-action waves-effect waves-green btn-flat confirm-success'

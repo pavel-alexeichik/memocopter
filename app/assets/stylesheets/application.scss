@@ -4,7 +4,8 @@
 // @import "materialize/components/prefixer";
 @import "materialize/components/mixins";
 @import "materialize/components/color";
-$primary-color: color("blue", "lighten-2") !default;
+// $primary-color: color("blue", "lighten-2") !default;
+$primary-color: #26a69a !default;
 
 // Variables;
 @import "materialize/components/variables";
@@ -40,4 +41,6 @@ $primary-color: color("blue", "lighten-2") !default;
 @import "materialize/components/date_picker/default.date";
 @import "materialize/components/date_picker/default.time";
 
-@import "navbar"
+@import "general";
+@import "navbar";
+@import "cards";

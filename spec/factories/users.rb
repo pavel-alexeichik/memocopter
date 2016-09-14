@@ -7,6 +7,10 @@ FactoryGirl.define do
 
     factory :default_user do
       email "default_test_email@test.com"
+      transient { cards_count 5 }
+      after(:create) do |user, evaluator|
+        create_list(:card, evaluator.cards_count, user: user)
+      end
     end
   end
 end
