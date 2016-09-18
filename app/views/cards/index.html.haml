@@ -17,7 +17,7 @@
           = card.answer
 
 #active-card-template.hide
-  %input.id{type: :hidden, 'data-bind': 'value: activeCardId'}
+  %input.card-id{type: :hidden, 'data-bind': 'value: activeCardId'}
   .collapsible-header
     %input.card-question{type: :text, 'data-bind': 'value: activeQuestion'}
   .collapsible-body
