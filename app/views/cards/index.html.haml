@@ -36,6 +36,6 @@
   .modal-content
     Are you sure?
   .modal-footer
-    %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{href: "#!"} Close
+    %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{href: "#", onclick: "return false;"} Close
     %a{'data-method': :delete, 'data-bind': 'attr: { href: activeCardDeletePath() }',
       class: 'modal-action waves-effect waves-green btn-flat'} Delete
