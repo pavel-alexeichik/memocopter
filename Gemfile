@@ -34,6 +34,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'simple_form'
 gem 'materialize-sass'
 
+gem 'knockoutjs-rails'
+
 gem 'devise'
 
 group :development, :test do

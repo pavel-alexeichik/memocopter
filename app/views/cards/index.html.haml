@@ -4,13 +4,31 @@
     %span.btn-text New card
 %br
 
-%ul.collection.cards-collection
+%ul.collapsible.cards-collection.popout
   - @cards.each do |card|
-    %li.collection-item{"data-url": edit_card_path(card)}
-      = card.question
-      = link_to card, method: :delete, class: 'secondary-content confirmable',
-        'data-modal-id': "#confirm-dialog" do
-        %i.material-icons delete
+    %li
+      .collapsible-header
+        %span.card-question
+          = card.question
+      .collapsible-body
+        %p.card-answer
+          = card.answer
+        .delete-link-wrapper
+          = link_to card, method: :delete, class: 'confirmable right',
+            'data-modal-id': "#confirm-dialog" do
+            %i.material-icons delete
+
+#active-card-template.hide
+  .collapsible-header
+    %input.card-question{type: :text, 'data-bind': 'value: activeQuestion'}
+  .collapsible-body
+    %input.card-answer{type: :text, 'data-bind': 'value: activeAnswer'}
+
+#inactive-card-template.hide
+  .collapsible-header
+    %span.card-question{'data-bind': 'text: activeQuestion'}
+  .collapsible-body
+    %p.card-answer{'data-bind': 'text: activeAnswer'}
 
 #confirm-dialog.modal
   .modal-content
