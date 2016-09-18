@@ -1,9 +1,3 @@
-%div
-  = link_to new_card_path, class: 'btn-large waves-effect waves-light' do
-    %i.material-icons add
-    %span.btn-text New card
-%br
-
 %ul.collapsible.cards-collection.popout
   - @cards.each do |card|
     %li.card-row
@@ -19,7 +13,7 @@
 #active-card-template.hide
   %input.card-id{type: :hidden, 'data-bind': 'value: activeCardId'}
   .collapsible-header
-    %input.card-question{type: :text, 'data-bind': 'value: activeQuestion'}
+    %input.card-question{type: :text, 'data-bind': 'value: activeQuestion', autofocus: true}
   .collapsible-body
     %input.card-answer{type: :text, 'data-bind': 'value: activeAnswer'}
     %a.delete-link.modal-trigger.right{'href': '#confirm-dialog'}

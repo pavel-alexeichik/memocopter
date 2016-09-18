@@ -11,15 +11,31 @@ feature 'Cards page', js: true do
     expect(find('.cards-collection').all('.card-question').count).to eq(cards_count)
   end
 
-  scenario 'create new card' do
-    click_on 'New card'
-    expect(page).to have_current_path(new_card_path)
-  end
+  feature 'edit card' do
+    let(:card) { user.cards.first }
+    before :each do
+      find('.card-question', text: card.question).click
+    end
+    
+    [:question, :answer].each do |field|
+      scenario "change #{field}" do
+        input = find("input.card-#{field}")
+        expect(input.value).to eq(card.send(field))
+        new_value = "new-value-#{field}"
+        input.set new_value
+        blur
+        expect(card.reload.send(field)).to eq(new_value)
+      end
 
-  xscenario 'edit card' do
-    card = user.cards.first
-    find('.card-question', text: card.question).click
-    expect(page).to have_current_path(edit_card_path(card))
+      scenario "fill #{field} with empty value" do
+        input = find("input.card-#{field}")
+        original_value = card.send(field)
+        expect(input.value).to eq(original_value)
+        input.set ''
+        blur
+        expect(card.reload.send(field)).to eq(original_value)
+      end
+    end
   end
 
   feature 'delete card' do

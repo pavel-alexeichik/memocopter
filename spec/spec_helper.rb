@@ -20,6 +20,8 @@
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
+require_relative 'support/utils'
+
 RSpec.configure do |config|
 
   # rspec-expectations config goes here. You can use an alternate
