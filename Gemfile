@@ -35,6 +35,7 @@ gem 'simple_form'
 gem 'materialize-sass'
 
 gem 'knockoutjs-rails'
+gem "js-routes"
 
 gem 'devise'
 

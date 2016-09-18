@@ -14,6 +14,6 @@
 //= require materialize-sprockets
 //= require jquery_ujs
 //= require turbolinks
-//= require confirmable
+//= require js-routes
 //= require knockout
 //= require_tree .

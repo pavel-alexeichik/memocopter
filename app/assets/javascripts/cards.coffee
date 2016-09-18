@@ -2,7 +2,12 @@ class CardsViewModel
   previousRow: null
   activeQuestion: ko.observable("")
   activeAnswer: ko.observable("")
-  activeRow: -> $('.collapsible.cards-collection > li.active')
+  activeCardId: ko.observable("")
+  activeCardDeletePath: ->
+    self = this
+    ko.computed ->
+      Routes.card_path(self.activeCardId())
+  activeRow: -> $('.collapsible.cards-collection > .card-row.active')
   activeRowChanged: ->
     return if this.previousRow? && this.previousRow.hasClass('active')
     this.deactivateRows()
@@ -11,6 +16,7 @@ class CardsViewModel
     this.updateFields activeRow
     this.renderTemplateInto activeRow
   updateFields: (activeRow)->
+    this.activeCardId activeRow.find('.card-id').html()
     this.activeQuestion activeRow.find('.card-question').html()
     this.activeAnswer activeRow.find('.card-answer').html()
   deactivateRows: ->
@@ -22,6 +28,7 @@ class CardsViewModel
     $('#active-card-template').children().appendTo(element)
 
 $(document).on 'turbolinks:load', ->
+  $('.modal-trigger').leanModal()
   $('.collapsible.cards-collection').collapsible()
   cardsViewModel = new CardsViewModel()
   ko.applyBindings(cardsViewModel)

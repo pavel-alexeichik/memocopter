@@ -6,25 +6,27 @@
 
 %ul.collapsible.cards-collection.popout
   - @cards.each do |card|
-    %li
+    %li.card-row
+      .card-id.hide<
+        = card.id
       .collapsible-header
-        %span.card-question
+        %span.card-question<
           = card.question
       .collapsible-body
-        %p.card-answer
+        .card-answer<
           = card.answer
-        .delete-link-wrapper
-          = link_to card, method: :delete, class: 'confirmable right',
-            'data-modal-id': "#confirm-dialog" do
-            %i.material-icons delete
 
 #active-card-template.hide
+  %input.id{type: :hidden, 'data-bind': 'value: activeCardId'}
   .collapsible-header
     %input.card-question{type: :text, 'data-bind': 'value: activeQuestion'}
   .collapsible-body
     %input.card-answer{type: :text, 'data-bind': 'value: activeAnswer'}
+    %a.delete-link.modal-trigger.right{'href': '#confirm-dialog'}
+      %i.material-icons delete
 
 #inactive-card-template.hide
+  .card-id.hide{'data-bind': 'text: activeCardId'}<
   .collapsible-header
     %span.card-question{'data-bind': 'text: activeQuestion'}
   .collapsible-body
@@ -35,5 +37,5 @@
     Are you sure?
   .modal-footer
     %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{href: "#!"} Close
-    = link_to 'Delete', 'url-placeholder', method: :delete,
-      class: 'modal-action waves-effect waves-green btn-flat confirm-success'
+    %a{'data-method': :delete, 'data-bind': 'attr: { href: activeCardDeletePath() }',
+      class: 'modal-action waves-effect waves-green btn-flat'} Delete
