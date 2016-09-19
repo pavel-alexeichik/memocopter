@@ -7,7 +7,7 @@ class NewCardViewModel
     this.newCardQuestion(card.question)
     this.newCardAnswer(card.answer)
     $('#new-card-template').clone().insertAfter('.cards-collection .new-card-row')
-      .removeClass('hide').attr('id', '').hide().show(1000)
+      .removeClass('hide').attr('id', '').hide().show()#show(1000)
 
 $(document).on 'turbolinks:load', ->
   newCardViewModel = new NewCardViewModel()

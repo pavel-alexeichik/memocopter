@@ -12,19 +12,22 @@ feature 'Cards page', js: true do
   end
 
   feature 'create card' do
-    let(:new_card) { FactoryGirl.build(:card) }
     before :each do
       find('.new-card-row').click
     end
 
-    scenario 'with valid data' do
-      within '.new-card-row' do
-        fill_in :card_question, with: new_card.question
-        fill_in :card_answer, with: new_card.answer
-        click_on 'Create'
+    scenario 'with valid data multiple times' do
+      2.times do
+        new_card = FactoryGirl.build(:card)
+        expect(user.cards.reload.map(&:question)).not_to include(new_card.question)
+        within '.new-card-row' do
+          fill_in :card_question, with: new_card.question
+          fill_in :card_answer, with: new_card.answer
+          click_on 'Create'
+        end
+        wait_for_ajax
+        expect(user.cards.reload.map(&:question)).to include(new_card.question)
       end
-      sleep 1 # wait for the new row to appear
-      expect(user.cards.reload.map(&:question)).to include(new_card.question)
     end
   end
 
