@@ -9,11 +9,12 @@
       = form_for @new_card, remote: true do |f|
         .row
           .input-field.col.s12
-            = f.text_field :question, class: 'grab-focus', 'data-bind': 'value: cardQuestion'
+            = f.text_field :question, class: 'grab-focus',
+              'data-bind': "value: cardQuestion, valueUpdate: 'afterkeydown'"
             %label{for: 'question'} Question
         .row
           .input-field.col.s12
-            = f.text_field :answer, 'data-bind': 'value: cardAnswer'
+            = f.text_field :answer, 'data-bind': "value: cardAnswer, valueUpdate: 'afterkeydown'"
             %label{for: 'answer'} Answer
         .row
           = f.submit 'Create', class: 'btn waves-effect waves-light orange',
