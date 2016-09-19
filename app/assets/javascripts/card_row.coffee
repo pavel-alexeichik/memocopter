@@ -14,5 +14,3 @@ $(document).on 'turbolinks:load', ->
   ko.applyBindings(cardRowViewModel, $('#card-row-template').get(0))
   $("form#new_card").on "ajax:success", (e, data, status, xhr) ->
     cardRowViewModel.addCard(data)
-    $(this).trigger 'reset'
-    $(this).find('input#card_question').focus()

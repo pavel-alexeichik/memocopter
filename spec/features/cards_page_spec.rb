@@ -16,7 +16,7 @@ feature 'Cards page', js: true do
       find('.new-card-row').click
     end
 
-    xscenario 'without required fields' do
+    scenario 'without required fields' do
       within '.new-card-row' do
         expect(find('input[type="submit"]')).to be_disabled
       end
