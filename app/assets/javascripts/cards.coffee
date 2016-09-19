@@ -64,8 +64,7 @@ $(document).on 'turbolinks:load', ->
   $('.modal-trigger').leanModal()
   $('.collapsible.cards-collection').collapsible()
   cardsViewModel = new CardsViewModel()
-  ko.applyBindings(cardsViewModel, $('#active-card-template').get(0))
-  ko.applyBindings(cardsViewModel, $('#inactive-card-template').get(0))
+  $('.bind-to-cards-view').each -> ko.applyBindings(cardsViewModel, $(this).get(0))
   $('.collapsible.cards-collection').click ->
     cardsViewModel.activeRowChanged()
   $('.cards-collection .collapsible-header').click ->

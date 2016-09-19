@@ -11,6 +11,23 @@ feature 'Cards page', js: true do
     expect(find('.cards-collection').all('.card-question').count).to eq(cards_count)
   end
 
+  feature 'create card' do
+    let(:new_card) { FactoryGirl.build(:card) }
+    before :each do
+      find('.new-card-row').click
+    end
+
+    scenario 'with valid data' do
+      within '.new-card-row' do
+        fill_in :card_question, with: new_card.question
+        fill_in :card_answer, with: new_card.answer
+        click_on 'Create'
+      end
+      sleep 1 # wait for the new row to appear
+      expect(user.cards.reload.map(&:question)).to include(new_card.question)
+    end
+  end
+
   feature 'edit card' do
     let(:card) { user.cards.first }
     before :each do

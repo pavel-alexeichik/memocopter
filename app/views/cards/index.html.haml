@@ -28,7 +28,7 @@
         .card-answer<
           = card.answer
 
-#active-card-template.hide
+#active-card-template.hide.bind-to-cards-view
   %input.card-id{type: :hidden, 'data-bind': 'value: activeCardId'}
   .collapsible-header
     %input.card-question{type: :text, 'data-bind': 'value: activeQuestion', class: 'grab-focus'}
@@ -37,7 +37,7 @@
     %a.delete-link.modal-trigger.right{'href': '#confirm-dialog'}
       %i.material-icons delete
 
-#inactive-card-template.hide
+#inactive-card-template.hide.bind-to-cards-view
   .card-id.hide{'data-bind': 'text: activeCardId'}<
   .collapsible-header
     %span.card-question{'data-bind': 'text: activeQuestion'}
@@ -51,7 +51,7 @@
   .collapsible-body
     %p.card-answer{'data-bind': 'text: newCardAnswer'}
 
-#confirm-dialog.modal
+#confirm-dialog.modal.bind-to-cards-view
   .modal-content
     Are you sure?
   .modal-footer
