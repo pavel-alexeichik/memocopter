@@ -1,4 +1,22 @@
+%h1 Flashcards
+
 %ul.collapsible.cards-collection.popout
+  %li.new-card-row
+    .collapsible-header.center.waves-effect.waves-light.btn
+      %i.material-icons add
+      %span Add new card
+    .collapsible-body
+      = form_for @new_card, remote: true do |f|
+        .row
+          .input-field.col.s12
+            = f.text_field :question, class: 'grab-focus'
+            %label{for: 'question'} Question
+        .row
+          .input-field.col.s12
+            = f.text_field :answer
+            %label{for: 'answer'} Answer
+        .row
+          = f.submit 'Create', class: 'btn waves-effect waves-light orange'
   - @cards.each do |card|
     %li.card-row
       .card-id.hide<
@@ -13,7 +31,7 @@
 #active-card-template.hide
   %input.card-id{type: :hidden, 'data-bind': 'value: activeCardId'}
   .collapsible-header
-    %input.card-question{type: :text, 'data-bind': 'value: activeQuestion', autofocus: true}
+    %input.card-question{type: :text, 'data-bind': 'value: activeQuestion', class: 'grab-focus'}
   .collapsible-body
     %input.card-answer{type: :text, 'data-bind': 'value: activeAnswer'}
     %a.delete-link.modal-trigger.right{'href': '#confirm-dialog'}
@@ -25,6 +43,13 @@
     %span.card-question{'data-bind': 'text: activeQuestion'}
   .collapsible-body
     %p.card-answer{'data-bind': 'text: activeAnswer'}
+
+%li#new-card-template.hide.card_row
+  .card-id.hide{'data-bind': 'text: newCardId'}<
+  .collapsible-header
+    %span.card-question{'data-bind': 'text: newCardQuestion'}
+  .collapsible-body
+    %p.card-answer{'data-bind': 'text: newCardAnswer'}
 
 #confirm-dialog.modal
   .modal-content

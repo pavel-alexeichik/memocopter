@@ -1,6 +1,7 @@
 class CardsViewModel
   previousRow: null
   onUpdateFields: false
+
   activeQuestion: ko.observable("")
   activeAnswer: ko.observable("")
   activeCardId: ko.observable("")
@@ -63,6 +64,10 @@ $(document).on 'turbolinks:load', ->
   $('.modal-trigger').leanModal()
   $('.collapsible.cards-collection').collapsible()
   cardsViewModel = new CardsViewModel()
-  ko.applyBindings(cardsViewModel)
+  ko.applyBindings(cardsViewModel, $('#active-card-template').get(0))
+  ko.applyBindings(cardsViewModel, $('#inactive-card-template').get(0))
   $('.collapsible.cards-collection').click ->
     cardsViewModel.activeRowChanged()
+  $('.cards-collection .collapsible-header').click ->
+    focus = -> $('.cards-collection li.active input.grab-focus').focus()
+    setTimeout(focus, 200)

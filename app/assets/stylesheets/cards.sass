@@ -1,10 +1,17 @@
-.cards-collection li.active
-  .collapsible-body
-    display: block!important
-    overflow: hidden
-    padding: 20px 2% 10px
-    a.delete-link
-      cursor: pointer
-  .collapsible-header
-    padding-left: 2%
-    padding-right: 2%
+.cards-collection
+  li.new-card-row
+    .collapsible-header
+      @extend .orange
+      @extend .white-text
+    .new-card-btn-content
+      width: 140px
+  li.active
+    .collapsible-body
+      display: block!important
+      overflow: hidden
+      padding: 20px 2% 10px
+      a.delete-link
+        cursor: pointer
+    .collapsible-header
+      padding-left: 2%
+      padding-right: 2%
