@@ -44,12 +44,12 @@
   .collapsible-body
     %p.card-answer{'data-bind': 'text: activeAnswer'}
 
-%li#new-card-template.hide.card_row
-  .card-id.hide{'data-bind': 'text: newCardId'}<
+%li#card-row-template.hide.card-row
+  .card-id.hide{'data-bind': 'text: cardId'}<
   .collapsible-header
-    %span.card-question{'data-bind': 'text: newCardQuestion'}
+    %span.card-question{'data-bind': 'text: cardQuestion'}
   .collapsible-body
-    %p.card-answer{'data-bind': 'text: newCardAnswer'}
+    %p.card-answer{'data-bind': 'text: cardAnswer'}
 
 #confirm-dialog.modal.bind-to-cards-view
   .modal-content

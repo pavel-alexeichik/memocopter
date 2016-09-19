@@ -16,6 +16,12 @@ feature 'Cards page', js: true do
       find('.new-card-row').click
     end
 
+    xscenario 'without required fields' do
+      within '.new-card-row' do
+        expect(find('input[type="submit"]')).to be_disabled
+      end
+    end
+
     scenario 'with valid data multiple times' do
       2.times do
         new_card = FactoryGirl.build(:card)
@@ -25,7 +31,7 @@ feature 'Cards page', js: true do
           fill_in :card_answer, with: new_card.answer
           click_on 'Create'
         end
-        wait_for_ajax
+        expect(page).to have_css('.card-row', text: new_card.question)
         expect(user.cards.reload.map(&:question)).to include(new_card.question)
       end
     end
