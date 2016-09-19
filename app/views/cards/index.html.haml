@@ -16,7 +16,8 @@
             = f.text_field :answer, 'data-bind': 'value: cardAnswer'
             %label{for: 'answer'} Answer
         .row
-          = f.submit 'Create', class: 'btn waves-effect waves-light orange'
+          = f.submit 'Create', class: 'btn waves-effect waves-light orange',
+            'data-bind': "disable: submitDisabled"
   - @cards.each do |card|
     %li.card-row
       .card-id.hide<
