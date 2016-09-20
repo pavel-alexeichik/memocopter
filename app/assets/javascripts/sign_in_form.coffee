@@ -1,4 +1,4 @@
-$(document).on 'turbolinks:load', ->
+$(document).onPageLoad ->
   $("#login_form").on("ajax:success", (e, data, status, xhr) ->
     if data.logged_in
       window.location.href = '/'

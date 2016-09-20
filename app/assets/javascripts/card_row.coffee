@@ -9,7 +9,7 @@ class CardRowViewModel
     $('#card-row-template').clone().insertAfter('.cards-collection .new-card-row')
       .removeClass('hide').attr('id', '').hide().show(1000)
 
-$(document).on 'turbolinks:load', ->
+$('body.cards-controller').onPageLoad ->
   cardRowViewModel = new CardRowViewModel()
   ko.applyBindings(cardRowViewModel, $('#card-row-template').get(0))
   $("form#new_card").on "ajax:success", (e, data, status, xhr) ->

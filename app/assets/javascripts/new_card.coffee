@@ -13,7 +13,7 @@ class NewCardViewModel
     this.cardAnswer('')
     $('form#new_card input#card_question').focus()
 
-$(document).on 'turbolinks:load', ->
+$('body.cards-controller').onPageLoad ->
   vm = new NewCardViewModel()
   form = $('form#new_card')
   ko.applyBindings(vm, form.get(0))
