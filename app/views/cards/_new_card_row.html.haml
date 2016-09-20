@@ -1,0 +1,18 @@
+%li.new-card-row
+  .collapsible-header.center.waves-effect.waves-light.btn
+    %i.material-icons add
+    %span Add new card
+  .collapsible-body
+    = form_for @new_card, remote: true do |f|
+      .row
+        .input-field.col.s12
+          = f.text_field :question, class: 'grab-focus',
+            'data-bind': "value: cardQuestion, valueUpdate: 'afterkeydown'"
+          %label{for: 'question'} Question
+      .row
+        .input-field.col.s12
+          = f.text_field :answer, 'data-bind': "value: cardAnswer, valueUpdate: 'afterkeydown'"
+          %label{for: 'answer'} Answer
+      .row
+        = f.submit 'Create', class: 'btn waves-effect waves-light orange',
+          'data-bind': "disable: submitDisabled"

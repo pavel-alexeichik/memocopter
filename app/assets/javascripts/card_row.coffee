@@ -6,11 +6,11 @@ class CardRowViewModel
     this.cardId(card.id)
     this.cardQuestion(card.question)
     this.cardAnswer(card.answer)
-    $('#card-row-template').clone().insertAfter('.cards-collection .new-card-row')
-      .removeClass('hide').attr('id', '').hide().show(1000)
+    $('#card-row-template-container li').clone()
+      .insertAfter('.cards-collection .new-card-row').hide().show(1000)
 
 $('body.cards-controller').onPageLoad ->
   cardRowViewModel = new CardRowViewModel()
-  ko.applyBindings(cardRowViewModel, $('#card-row-template').get(0))
+  ko.applyBindings(cardRowViewModel, $('#card-row-template-container').get(0))
   $("form#new_card").on "ajax:success", (e, data, status, xhr) ->
     cardRowViewModel.addCard(data)

@@ -1,24 +1,7 @@
-%h1 Flashcards
+%h1 Cards
 
 %ul.collapsible.cards-collection.popout
-  %li.new-card-row
-    .collapsible-header.center.waves-effect.waves-light.btn
-      %i.material-icons add
-      %span Add new card
-    .collapsible-body
-      = form_for @new_card, remote: true do |f|
-        .row
-          .input-field.col.s12
-            = f.text_field :question, class: 'grab-focus',
-              'data-bind': "value: cardQuestion, valueUpdate: 'afterkeydown'"
-            %label{for: 'question'} Question
-        .row
-          .input-field.col.s12
-            = f.text_field :answer, 'data-bind': "value: cardAnswer, valueUpdate: 'afterkeydown'"
-            %label{for: 'answer'} Answer
-        .row
-          = f.submit 'Create', class: 'btn waves-effect waves-light orange',
-            'data-bind': "disable: submitDisabled"
+  = render 'new_card_row'
   - @cards.each do |card|
     %li.card-row
       .card-id.hide<
@@ -31,32 +14,17 @@
           = card.answer
 
 #active-card-template.hide.bind-to-cards-view
-  %input.card-id{type: :hidden, 'data-bind': 'value: activeCardId'}
+  %input.card-id{type: :hidden, 'data-bind': 'value: cardId'}
   .collapsible-header
-    %input.card-question{type: :text, 'data-bind': 'value: activeQuestion', class: 'grab-focus'}
+    %input.card-question{type: :text, 'data-bind': 'value: cardQuestion', class: 'grab-focus'}
   .collapsible-body
-    %input.card-answer{type: :text, 'data-bind': 'value: activeAnswer'}
+    %input.card-answer{type: :text, 'data-bind': 'value: cardAnswer'}
     %a.delete-link.modal-trigger.right{'href': '#confirm-dialog'}
       %i.material-icons delete
 
-#inactive-card-template.hide.bind-to-cards-view
-  .card-id.hide{'data-bind': 'text: activeCardId'}<
-  .collapsible-header
-    %span.card-question{'data-bind': 'text: activeQuestion'}
-  .collapsible-body
-    %p.card-answer{'data-bind': 'text: activeAnswer'}
+%ul#inactive-card-template-container.hide.bind-to-cards-view
+  = render 'card_row'
+%ul#card-row-template-container.hide
+  = render 'card_row'
 
-%li#card-row-template.hide.card-row
-  .card-id.hide{'data-bind': 'text: cardId'}<
-  .collapsible-header
-    %span.card-question{'data-bind': 'text: cardQuestion'}
-  .collapsible-body
-    %p.card-answer{'data-bind': 'text: cardAnswer'}
-
-#confirm-dialog.modal.bind-to-cards-view
-  .modal-content
-    Are you sure?
-  .modal-footer
-    %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{href: "#", onclick: "return false;"} Close
-    %a{'data-method': :delete, 'data-bind': 'attr: { href: activeCardDeletePath() }',
-      class: 'modal-action waves-effect waves-green btn-flat'} Delete
+= render 'confirm_dialog'

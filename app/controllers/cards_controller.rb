@@ -13,13 +13,10 @@ class CardsController < ApplicationController
   def create
     @card = Card.new(card_params)
     @card.user = current_user
-
     respond_to do |format|
       if @card.save
-        # format.html { redirect_to @card, notice: 'Card was successfully created.' }
         format.json { render json: @card, status: :created }
       else
-        # format.html { render :new }
         format.json { render json: @card.errors, status: :unprocessable_entity }
       end
     end
