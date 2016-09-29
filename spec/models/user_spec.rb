@@ -9,7 +9,7 @@ describe User do
   xit { should validate_uniqueness_of(:email, case_sensitive: false) }
   it { should validate_presence_of(:display_name) }
 
-  it 'shold not create admin user by default' do
+  it 'should not create admin user by default' do
     user = User.new
     expect(user).not_to be_admin
   end
