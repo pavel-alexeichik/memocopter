@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20160924092537) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "cards", force: :cascade do |t|
     t.integer  "user_id",            null: false
     t.string   "question",           null: false
@@ -20,9 +23,8 @@ ActiveRecord::Schema.define(version: 20160924092537) do
     t.datetime "updated_at",         null: false
     t.datetime "next_training_time"
     t.integer  "training_interval"
-    t.index ["next_training_time", "training_interval"], name: "index_cards_on_next_training_time_and_training_interval"
-    t.index ["user_id"], name: "index_cards_on_user_id"
-    t.index [nil], name: "index_cards_on_user"
+    t.index ["next_training_time", "training_interval"], name: "index_cards_on_next_training_time_and_training_interval", using: :btree
+    t.index ["user_id"], name: "index_cards_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,10 +49,10 @@ ActiveRecord::Schema.define(version: 20160924092537) do
     t.integer  "failed_attempts",        default: 0,     null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   end
 
 end

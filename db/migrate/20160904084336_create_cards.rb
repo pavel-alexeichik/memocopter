@@ -6,6 +6,5 @@ class CreateCards < ActiveRecord::Migration[5.0]
       t.string :answer, null: false
       t.timestamps
     end
-    add_index :cards, :user
   end
 end
