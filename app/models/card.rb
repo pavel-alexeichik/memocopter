@@ -7,7 +7,11 @@ class Card < ApplicationRecord
   validates :question, presence: true
   validates :answer, presence: true
   before_create :initialize_training_interval, :initialize_next_training_time
-  scope :for_training, -> { where('next_training_time <= ?', Time.now + TRAINING_TIME_OFFSET) }
+
+  def self.for_training
+    for_training = where('next_training_time <= ?', Time.now + TRAINING_TIME_OFFSET)
+    for_training.order(training_interval: :desc)
+  end
 
   def training_interval=(value)
     super [MIN_TRAINING_INTERVAL, value].max

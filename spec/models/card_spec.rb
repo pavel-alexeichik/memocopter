@@ -42,6 +42,16 @@ describe Card do
     it 'should treat new card as ready for training' do
       expect(Card.for_training.exists?(card.id)).to be_truthy
     end
+
+    it 'should order cards by training_interval descending' do
+      user.cards.each_with_index do |card, index|
+        card.training_interval = (index + 1).days
+        card.save!
+      end
+      cards = user.cards.for_training
+      expect(cards.first.training_interval).to eq(cards.count.days)
+      expect(cards.last.training_interval).to eq(1.day)
+    end
   end
 
   describe 'save training result' do
