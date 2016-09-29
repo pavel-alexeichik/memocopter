@@ -13,13 +13,11 @@
 ActiveRecord::Schema.define(version: 20160924092537) do
 
   create_table "cards", force: :cascade do |t|
-    t.integer  "user_id",                            null: false
-    t.string   "question",                           null: false
-    t.string   "answer",                             null: false
-    t.boolean  "public",             default: false
-    t.integer  "position",           default: 0
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.integer  "user_id",            null: false
+    t.string   "question",           null: false
+    t.string   "answer",             null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.datetime "next_training_time"
     t.integer  "training_interval"
     t.index ["next_training_time", "training_interval"], name: "index_cards_on_next_training_time_and_training_interval"

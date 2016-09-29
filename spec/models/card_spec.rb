@@ -97,7 +97,4 @@ describe Card do
       expect(card.reload.training_interval).to eq(2.days)
     end
   end # describe 'save training result'
-
-  xit 'should not be public by default'
-  xit 'should have position set to 0 by default'
 end
