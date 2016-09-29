@@ -8,18 +8,30 @@ RSpec.configure do |config|
   config.include Utils, type: :feature
 end
 
-module WaitForAjax
-  def wait_for_ajax
+module WaitHelpers
+  def wait_until
     Timeout.timeout(Capybara.default_max_wait_time) do
-      loop until finished_all_ajax_requests?
+      loop until yield
     end
   end
 
-  def finished_all_ajax_requests?
-    page.evaluate_script('jQuery.active').zero?
+  def wait_for_ajax
+    wait_for_js('jQuery.active == 0')
+  end
+
+  def wait_for_cable_connection
+    wait_until do
+      page.has_css?('body.cable-connected')
+    end
+  end
+
+  def wait_for_js(script)
+    wait_until do
+      page.evaluate_script(script)
+    end
   end
 end
 
 RSpec.configure do |config|
-  config.include WaitForAjax, type: :feature
+  config.include WaitHelpers, type: :feature
 end

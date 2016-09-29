@@ -57,12 +57,14 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
   gem 'erb2haml'
+  gem 'hirb'
 end
 
 group :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'launchy'
   # gem 'selenium-webdriver'
   # gem 'guard-rspec'
 end

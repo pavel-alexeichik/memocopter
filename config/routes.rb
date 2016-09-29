@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   authenticated :user do #-> if user is logged in
     root 'home#dashboard', as: :dashboard
     resources :cards, only: [:index, :create, :update, :destroy]
+    get 'training', to: 'training#index', as: :training
   end
 
   unauthenticated :user do #-> if user is not logged in

@@ -1,14 +1,33 @@
 feature 'Cards page', js: true do
   let(:user) { FactoryGirl.create(:default_user) }
   before :each do
-    sign_in(user)
-    visit cards_path
+    unless self.class.metadata[:skip_before]
+      sign_in(user)
+      visit cards_path
+    end
   end
 
   scenario 'display cards list of the user' do
     cards_count = user.cards.count
     expect(cards_count).to be > 1
     expect(find('.cards-collection').all('.card-question').count).to eq(cards_count)
+    user.cards.each do |card|
+      expect(page).to have_css('.cards-collection .card-row', text: card.question)
+    end
+  end
+
+  scenario 'do not display cards of the other users', skip_before: true do
+    user2 = FactoryGirl.create(:second_user)
+    expect(user2.reload.cards.count).to be > 0
+    sign_in(user)
+    visit cards_path
+    expect(find('.cards-collection').all('.card-question').count).to eq(user.cards.count)
+    user.cards.each do |card|
+      expect(page).to have_css('.cards-collection .card-row', text: card.question)
+    end
+    user2.cards.each do |card|
+      expect(page).not_to have_css('.cards-collection .card-row', text: card.question)
+    end
   end
 
   feature 'create card' do

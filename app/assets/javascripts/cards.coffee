@@ -14,9 +14,8 @@ class CardsViewModel
           self.sendUpdateRequestIfChanged(field, newValue)
 
   activeCardDeletePath: ->
-    self = this
-    ko.computed ->
-      Routes.card_path(self.cardId())
+    ko.computed =>
+      Routes.card_path(this.cardId())
 
   activeRow: -> $('.collapsible.cards-collection > .card-row.active')
 

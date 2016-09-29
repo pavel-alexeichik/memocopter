@@ -1,0 +1,37 @@
+.training-controller main.main-content-wrapper
+  position: relative
+
+#training-view
+  @extend .blue-grey, .darken-1, .center, .white-text, .valign-wrapper
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  .active-training-session, .finished-training-session
+    width: 100%
+  h2
+    @extend .valign
+  h2.answer-shown
+    @extend .grey-text, .text-lighten-2
+  .card-actions
+    position: absolute
+    bottom: 30px
+    width: 100%
+    button
+      @extend .btn, .waves-effect, .waves-light, .blue-grey, .lighten-1, .orange-text
+      width: 117px
+    .keyboard-shortcuts
+      @extend .grey-text, .text-lighten-1
+      margin-top: 20px
+      .header
+        margin: 0 40px 0 -175px
+      .right-key, .wrong-key, .flip-key
+        display: inline-block
+        width: 117px
+  .learn-wrong-cards-btn-container
+    position: absolute
+    bottom: 71px
+    right: 40px
+    button
+      @extend .btn-floating, .btn-large, .waves-effect, .waves-light, .orange, .lighten-1

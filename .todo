@@ -1,0 +1,38 @@
+Bugs:
+    ☐ Fix buttons lighting at the training page @minor
+    ☐ When not logged in user tries to open /training page, it fails with exception @important
+    ☐ Trigger button click when clicking text "Learn wrong cards" @minor
+
+Todo:
+    ☐ Implement training page
+    ☐ Display current progress at the training page
+    ☐ Display training session results after finishing training session
+    ☐ Enable user to finish training session manually
+    ☐ Implement sliding out the question/answer with red/green
+    ☐ Add failed cards limit that defaults to 50
+    ☐ Unsubscribe from TrainingChannel when leaving the training page
+    ☐ Implement cards articulation @important
+    ☐ Add favicon
+    ☐ Implement footer
+    ☐ Implement dashboard (What should be on the dashboard?)
+    ☐ Allow card editing in training mode @minor
+    ☐ Add tags to the cards
+    ☐ Move secret tokens, passwords, etc. to the yaml config file. See railscasts YAML Configuration #85
+    ☐ Write specs for navbar @minor
+    ☐ Add training timer with idle ablilty
+    ☐ Hide Wrong button until Flip is not clicked
+    ☐ Add autocomplete to the new card creation form when card with the same question exists
+
+
+
+Hotkeys:
+    cmd-enter: add a new todo item below the current
+    cmd-shift-enter: add a new todo item above the current
+    cmd-d: toggle completion of the task
+    cmd-shift-a: move all completed tasks to the archive section
+    ctrl-c: cancel the selected tasks
+    ctrl-s: add/update timestamp for current task
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+    ✔ Cards index page shows the cards of the other users @important @done(2016-09-24 20:11) @project(Bugs)
