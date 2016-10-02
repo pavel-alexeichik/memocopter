@@ -30,6 +30,11 @@ class @TrainingViewModel
   constructor: ->
     @_dataProvider(App.training)
     @_showNextCard()
+    @currentCard.subscribe @_speakCard.bind(this)
+
+  _speakCard: (card) ->
+    message = new SpeechSynthesisUtterance(card.question)
+    speechSynthesis.speak(message)
 
   _proceedToNextCard: (currentCardResult) ->
     @_dataProvider().saveTrainingResult(@currentCard().id, currentCardResult)
