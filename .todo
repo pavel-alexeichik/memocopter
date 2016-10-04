@@ -2,16 +2,19 @@ Bugs:
     ☐ Fix buttons lighting at the training page @minor
     ☐ When not logged in user tries to open /training page, it fails with exception @important
     ☐ Trigger button click when clicking text "Learn wrong cards" @minor
+    ☐ Fix deprication at the training page: 'KeyboardEvent.keyIdentifier' is deprecated and will be removed in M54, around October 2016. @minor
+    ☐ After going to the cards page from the training page, the training page shows the next word. @important
+    ☐ After refreshing the training page all the wrong cards dissapear @important
 
 Todo:
-    ☐ Implement training page
-    ☐ Display current progress at the training page
+    ☐ Display current progress at the training page @important
+    ☐ Implement shuffle mode switch @important
     ☐ Display training session results after finishing training session
     ☐ Enable user to finish training session manually
-    ☐ Implement sliding out the question/answer with red/green
+    ☐ Implement inline translations
+    ☐ Implement sliding out the question/answer with red/green @minor
     ☐ Add failed cards limit that defaults to 50
     ☐ Unsubscribe from TrainingChannel when leaving the training page
-    ☐ Implement cards articulation @important
     ☐ Add favicon
     ☐ Implement footer
     ☐ Implement dashboard (What should be on the dashboard?)
@@ -22,6 +25,7 @@ Todo:
     ☐ Add training timer with idle ablilty
     ☐ Hide Wrong button until Flip is not clicked
     ☐ Add autocomplete to the new card creation form when card with the same question exists
+    ☐ Add ability to go to the previous card in the training mode
 
 
 
@@ -35,4 +39,6 @@ Hotkeys:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+    ✔ Implement training page @done(2016-10-02 13:33) @project(Todo)
+    ✔ Implement cards articulation @important @done(2016-10-02 13:33) @project(Todo)
     ✔ Cards index page shows the cards of the other users @important @done(2016-09-24 20:11) @project(Bugs)
