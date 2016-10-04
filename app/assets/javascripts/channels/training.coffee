@@ -3,6 +3,8 @@ App.training = App.cable.subscriptions.create "TrainingChannel",
   _currentCardIndex: 0
   _loadingCards: true # wait for the server to send initial data
   _waitingForCards: []
+  _waitingForLoading: []
+
   connected: ->
     $('body').addClass('cable-connected')
     @perform('preload_cards')
@@ -16,6 +18,8 @@ App.training = App.cable.subscriptions.create "TrainingChannel",
     @_loadingCards = false
     @nextCard(fn) for fn in @_waitingForCards
     @_waitingForCards = []
+    @onDataLoaded(fn) for fn in @_waitingForLoading
+    @_waitingForLoading = []
 
   cardsLoading: -> @_loadingCards
 
@@ -31,6 +35,15 @@ App.training = App.cable.subscriptions.create "TrainingChannel",
         fn null
       else
         @_waitForCardsLoading fn
+
+  getCurrentCardIndex: -> @_currentCardIndex
+  getTotalCardsCount: -> @_cards.length
+
+  onDataLoaded: (fn) ->
+    if @_loadingCards
+      @_waitingForLoading.push fn
+    else
+      fn()
 
   _noCardsLeft: -> @_currentCardIndex == @_cards.length and !@_loadingCards
 

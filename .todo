@@ -26,6 +26,8 @@ Todo:
     ☐ Hide Wrong button until Flip is not clicked
     ☐ Add autocomplete to the new card creation form when card with the same question exists
     ☐ Add ability to go to the previous card in the training mode
+    ☐ Add exception logging
+    ☐ Add loading splash at the training page @minor
 
 
 

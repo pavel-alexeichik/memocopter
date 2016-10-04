@@ -169,17 +169,70 @@ feature 'Training page', js: true do
 
     scenario 'click "learn wrong cards" button and check that it dissapeared' do
       click :wrong
-      expect(page).to have_content('Learn wrong cards')
+      expect(page).to have_content('Learn 1 wrong cards')
       click 'learn-wrong-cards'
-      expect(page).not_to have_content('Learn wrong cards')
+      expect(page).not_to have_content('Learn 1 wrong cards')
       click :right
-      expect(page).not_to have_content('Learn wrong cards')
+      expect(page).not_to have_content('Learn 1 wrong cards')
       click :wrong
-      expect(page).to have_content('Learn wrong cards')
+      expect(page).to have_content('Learn 1 wrong cards')
       4.times { click :right }
       expect_training_session_finished
       expect(page).not_to have_content('Learn wrong cards')
     end
+
+    scenario 'dynamically update "learn wrong cards" text' do
+      click :wrong
+      expect(page).to have_content('Learn 1 wrong cards')
+      click :wrong
+      expect(page).to have_content('Learn 2 wrong cards')
+      click :right
+      expect(page).to have_content('Learn 2 wrong cards')
+      click 'learn-wrong-cards'
+      expect(page).not_to have_content('Learn 2 wrong cards')
+    end
   end # feature "learn wrong cards"
+
+  feature 'current progress' do
+    def expect_progress(current:, total: training_cards.count)
+      expect(page).to have_css('.progress-text', text: "Progress: #{current} / #{total}")
+      expected_percent = (current - 1) * 100 / total
+      expected_style = "width: #{expected_percent}%;"
+      expect(page.find('.progress .determinate')['style']).to eq(expected_style)
+    end
+
+    scenario 'click right/wrong/learn-wrong and check the progress updates' do
+      expect_progress current: 1
+      click :right
+      expect_progress current: 2
+      click :wrong
+      expect_progress current: 3
+      click :wrong
+      expect_progress current: 4
+      click 'learn-wrong-cards'
+      expect_progress current: 1, total: 2
+      click :wrong
+      expect_progress current: 1, total: 2
+      click :right
+      expect_progress current: 2, total: 2
+      click :right
+      expect_progress current: 4
+      click :right
+      expect_progress current: 5
+      click :wrong
+      expect_progress current: 1, total: 1
+      click :right
+      expect_training_session_finished
+    end
+
+    scenario 'learn all cards and check the progress dissapeared' do
+      expect(page).to have_css('.progress-text')
+      expect(page).to have_css('.progress')
+      training_cards.count.times { click :right }
+      expect_training_session_finished
+      expect(page).not_to have_css('.progress-text')
+      expect(page).not_to have_css('.progress')
+    end
+  end # fearure 'current progress'
 
 end # feature Training session

@@ -17,4 +17,7 @@
     %button.learn-wrong-cards-btn{'data-bind': "click: learnWrongCards"}
       %i.material-icons replay
     &nbsp;
-    %span Learn wrong cards
+    %span{'data-bind': 'text: "Learn " + wrongCards().length + " wrong cards"'}
+  .progress-text{'data-bind': "text: progress.text(), visible: !trainingSessionFinished()"}
+  .progress{'data-bind': 'visible: !trainingSessionFinished()'}
+    .determinate{'data-bind': 'style: { width: progress.percent() + "%" }'}
