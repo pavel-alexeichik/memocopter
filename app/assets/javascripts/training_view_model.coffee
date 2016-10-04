@@ -33,6 +33,8 @@ class @TrainingViewModel
     @currentCard.subscribe @_speakCard.bind(this)
 
   _speakCard: (card) ->
+    return unless SpeechSynthesisUtterance?
+    return unless speechSynthesis?
     message = new SpeechSynthesisUtterance(card.question)
     speechSynthesis.speak(message)
 

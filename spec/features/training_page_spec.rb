@@ -1,6 +1,6 @@
 feature 'Training page', js: true do
   let(:user) { FactoryGirl.create(:default_user) }
-  let(:training_cards) { user.cards.for_training }
+  let!(:training_cards) { user.cards.for_training.to_a }
   let!(:training_card) { training_cards.first }
   let!(:first_training_card) { training_card }
   let!(:second_training_card) { training_cards.second }
