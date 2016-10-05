@@ -9,29 +9,32 @@ Bugs:
     ☐ Click learn wrong cards, click flip on the last item and the right. New card shouldn't be flipped @minor
     ☐ After returning from the cards page to the training page it pronounces the cards twice @minor
 
-Todo:
-    ☐ Implement shuffle mode switch @important
+Features:
+    ☐ Implement shuffle mode switch, group by training interval @important
     ☐ Make the header fixed @minor
     ☐ Cards page: close current card on Esc @minor
-    ☐ Display training session results after finishing training session
-    ☐ Enable user to finish training session manually
-    ☐ Implement inline translations
     ☐ Implement sliding out the question/answer with red/green @minor
-    ☐ Add failed cards limit that defaults to 50
     ☐ Unsubscribe from TrainingChannel when leaving the training page
     ☐ Add favicon
     ☐ Implement footer
-    ☐ Implement dashboard (What should be on the dashboard?)
-    ☐ Allow card editing in training mode @minor
-    ☐ Add tags to the cards
-    ☐ Move secret tokens, passwords, etc. to the yaml config file. See railscasts YAML Configuration #85
     ☐ Write specs for navbar @minor
-    ☐ Add training timer with idle ablilty
     ☐ Hide Wrong button until Flip is not clicked
-    ☐ Add autocomplete to the new card creation form when card with the same question exists
-    ☐ Add ability to go to the previous card in the training mode
-    ☐ Add exception logging
     ☐ Add loading splash at the training page @minor
+    ☐ Notify the user when trying to create a card with the existing question. Propose to edit the existing one.
+
+Backlog:
+    ☐ Move secret tokens, passwords, etc. to the yaml config file. See railscasts YAML Configuration #85
+    ☐ Add autocomplete to the new card creation form when card with the same question exists
+    ☐ Enable user to finish training session manually
+    ☐ Implement inline translations
+    ☐ Add exception notifications via email
+    ☐ Display training session results after finishing training session
+    ☐ Add tags to the cards
+    ☐ Allow card editing in training mode @minor
+    ☐ Add training timer with idle ablilty
+    ☐ Add ability to go to the previous card in the training mode
+    ☐ Implement dashboard (What should be on the dashboard?)
+    ☐ Add failed cards limit that defaults to 50
 
 
 
