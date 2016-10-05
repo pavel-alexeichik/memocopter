@@ -5,10 +5,14 @@ Bugs:
     ☐ Fix deprication at the training page: 'KeyboardEvent.keyIdentifier' is deprecated and will be removed in M54, around October 2016. @minor
     ☐ After going to the cards page from the training page, the training page shows the next word. @important
     ☐ After refreshing the training page all the wrong cards dissapear @important
+    ☐ Flip card, click "learn wrong cards". Expected result: new card shouldn't be flipped. @minor
+    ☐ Click learn wrong cards, click flip on the last item and the right. New card shouldn't be flipped @minor
+    ☐ After returning from the cards page to the training page it pronounces the cards twice @minor
 
 Todo:
-    ☐ Display current progress at the training page @important
     ☐ Implement shuffle mode switch @important
+    ☐ Make the header fixed @minor
+    ☐ Cards page: close current card on Esc @minor
     ☐ Display training session results after finishing training session
     ☐ Enable user to finish training session manually
     ☐ Implement inline translations
@@ -41,6 +45,8 @@ Hotkeys:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+    ✔ Cards page: sort cards by created at desc @minor @done(2016-10-05 14:28) @project(Todo)
+    ✔ Display current progress at the training page @important @done(2016-10-04 20:24) @project(Todo)
     ✔ Implement training page @done(2016-10-02 13:33) @project(Todo)
     ✔ Implement cards articulation @important @done(2016-10-02 13:33) @project(Todo)
     ✔ Cards index page shows the cards of the other users @important @done(2016-09-24 20:11) @project(Bugs)

@@ -4,7 +4,7 @@ class CardsController < ApplicationController
   # GET /cards
   # GET /cards.json
   def index
-    @cards = current_user.cards
+    @cards = current_user.cards.ordered_by_created_at
     @new_card = Card.new
   end
 

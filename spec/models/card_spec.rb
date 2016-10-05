@@ -54,6 +54,22 @@ describe Card do
     end
   end
 
+  describe 'ordered_by_created_at scope' do
+    it 'should order cards properly' do
+      newest_card = FactoryGirl.build(:newest_card)
+      oldest_card = FactoryGirl.build(:oldest_card)
+      user.cards << newest_card
+      user.cards << oldest_card
+      creations = user.cards.ordered_by_created_at.map(&:created_at)
+      creations.each.with_index do |created_at, index|
+        next if index == 0
+        expect(created_at).to be <= creations[index-1]
+      end
+      expect(creations.first).to eq(newest_card.created_at)
+      expect(creations.last).to eq(oldest_card.created_at)
+    end
+  end
+
   describe 'save training result' do
     let(:current_time) { Time.now }
     before(:each) do

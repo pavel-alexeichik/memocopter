@@ -16,6 +16,15 @@ feature 'Cards page', js: true do
     end
   end
 
+  scenario 'display cards in the correct order' do
+    expect_row_to_have_question = -> (row_index, question) do
+      expect(find('.cards-collection').all('.card-question')[row_index].text).to eq(question)
+    end
+    user.cards.ordered_by_created_at.each.with_index do |card, index|
+      expect_row_to_have_question.(index, card.question)
+    end
+  end
+
   scenario 'do not display cards of the other users', skip_before: true do
     user2 = FactoryGirl.create(:second_user)
     expect(user2.reload.cards.count).to be > 0
