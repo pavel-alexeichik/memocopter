@@ -27,7 +27,7 @@ Backlog:
     ☐ Add autocomplete to the new card creation form when card with the same question exists
     ☐ Enable user to finish training session manually
     ☐ Implement inline translations
-    ☐ Add exception notifications via email
+    ☐ Add exception notifications via email. See Railscasts PRO #104 Exception Notifications (revised); Maybe use Graylog2 or errbit
     ☐ Display training session results after finishing training session
     ☐ Add tags to the cards
     ☐ Allow card editing in training mode @minor

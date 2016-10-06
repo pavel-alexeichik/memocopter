@@ -11,7 +11,7 @@ class Card < ApplicationRecord
   scope :ordered_by_created_at, -> { order created_at: :desc }
 
   def self.for_training
-    for_training = where('next_training_time <= ?', Time.now + TRAINING_TIME_OFFSET)
+    for_training = where('next_training_time <= ?', TRAINING_TIME_OFFSET.seconds.from_now)
     for_training.order(training_interval: :desc)
   end
 
@@ -20,13 +20,13 @@ class Card < ApplicationRecord
   end
 
   def save_training_result(result)
-    return if next_training_time > Time.now + TRAINING_TIME_OFFSET
+    return if next_training_time > TRAINING_TIME_OFFSET.seconds.from_now
     if result
       self.training_interval *= 2
     else
       self.training_interval *= 0.75
     end
-    self.next_training_time = Time.now + training_interval
+    self.next_training_time = training_interval.seconds.from_now
     save
   end
 

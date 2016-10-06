@@ -28,13 +28,13 @@ describe Card do
 
   describe 'for_training scope' do
     it 'should return cards that have next_training_time slightly greater than now' do
-      card.next_training_time = Time.now + Card::TRAINING_TIME_OFFSET / 2
+      card.next_training_time = (Card::TRAINING_TIME_OFFSET / 2).seconds.from_now
       card.save!
       expect(Card.for_training.exists?(card.id)).to be_truthy
     end
 
     it 'should not return cards that not ready for training' do
-      card.next_training_time = Time.now + 1.hour + Card::TRAINING_TIME_OFFSET
+      card.next_training_time = Card::TRAINING_TIME_OFFSET.seconds.from_now + 1.hour
       card.save!
       expect(Card.for_training.exists?(card.id)).to be_falsy
     end
@@ -103,7 +103,7 @@ describe Card do
     end
 
     it 'should not update training data when now is not the time for the training' do
-      next_training_time = Time.now + Card::TRAINING_TIME_OFFSET + 1.hour
+      next_training_time = Card::TRAINING_TIME_OFFSET.seconds.from_now + 1.hour
       card.update! training_interval: 2.days, next_training_time: next_training_time
       card.save_training_result(false)
       expect(card.reload.next_training_time).to eq(next_training_time)

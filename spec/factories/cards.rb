@@ -5,10 +5,10 @@ FactoryGirl.define do
     user
 
     factory :newest_card do
-      created_at Time.now + 1.hour
+      created_at 1.hour.from_now
     end
     factory :oldest_card do
-      created_at Time.now - 1.year
+      created_at 1.year.ago
     end
   end
 end
