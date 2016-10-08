@@ -9,21 +9,26 @@ Bugs:
     ☐ Click learn wrong cards, click flip on the last item and the right. New card shouldn't be flipped @minor
     ☐ After returning from the cards page to the training page it pronounces the cards twice @minor
 
-Features:
-    ☐ Implement shuffle mode switch, group by training interval @important
+Improvements:
+    ☐ Implement shuffle mode switch, group by training interval @important @training_page
     ☐ Make the header fixed @minor
-    ☐ Cards page: close current card on Esc @minor
-    ☐ Implement sliding out the question/answer with red/green @minor
-    ☐ Unsubscribe from TrainingChannel when leaving the training page
+    ☐ Close current card on Esc or Enter @minor @cards_page
+    ☐ Show total cards count @minor @cards_page
+    ☐ Implement sliding out the question/answer with red/green @minor @training_page
+    ☐ Unsubscribe from TrainingChannel when leaving the training page @training_page
     ☐ Add favicon
     ☐ Implement footer
     ☐ Write specs for navbar @minor
-    ☐ Hide Wrong button until Flip is not clicked
-    ☐ Add loading splash at the training page @minor
-    ☐ Notify the user when trying to create a card with the existing question. Propose to edit the existing one.
+    ☐ Hide Wrong button until Flip is not clicked @training_page
+    ☐ Add loading splash @training_page @minor
+    ☐ Notify the user when trying to create a card with the existing question. Propose to edit the existing one. @cards_page
+    ☐ Show "Not connected" when socket connection is not available @training_page @minor
+    ☐ Improve landing page styling
 
 Backlog:
     ☐ Move secret tokens, passwords, etc. to the yaml config file. See railscasts YAML Configuration #85
+    ☐ Add Active Admin
+    ☐ Add google analytics
     ☐ Add autocomplete to the new card creation form when card with the same question exists
     ☐ Enable user to finish training session manually
     ☐ Implement inline translations
