@@ -3,13 +3,14 @@ Bugs:
     ☐ When not logged in user tries to open /training page, it fails with exception @important
     ☐ Trigger button click when clicking text "Learn wrong cards" @minor
     ☐ Fix deprication at the training page: 'KeyboardEvent.keyIdentifier' is deprecated and will be removed in M54, around October 2016. @minor
-    ☐ After going to the cards page from the training page, the training page shows the next word. @important
+    ☐ After going to the cards page from the training page, the training page shows the next word. Also the new card is not uttered @important
     ☐ After refreshing the training page all the wrong cards dissapear @important
     ☐ Flip card, click "learn wrong cards". Expected result: new card shouldn't be flipped. @minor
     ☐ Click learn wrong cards, click flip on the last item and the right. New card shouldn't be flipped @minor
     ☐ After returning from the cards page to the training page it pronounces the cards twice @minor
 
 Improvements:
+    ☐ Add "Switch keyboard language" hint @important @training_page
     ☐ Implement shuffle mode switch, group by training interval @important @training_page
     ☐ Make the header fixed @minor
     ☐ Close current card on Esc or Enter @minor @cards_page
@@ -24,17 +25,20 @@ Improvements:
     ☐ Notify the user when trying to create a card with the existing question. Propose to edit the existing one. @cards_page
     ☐ Show "Not connected" when socket connection is not available @training_page @minor
     ☐ Improve landing page styling
+    ☐ Add a button to utter the current card again @training_page @minor
 
 Backlog:
+    ☐ Use rails_best_practices and rubocop gems
     ☐ Move secret tokens, passwords, etc. to the yaml config file. See railscasts YAML Configuration #85
     ☐ Add Active Admin
     ☐ Add google analytics
+    ☐ Add db seeds
     ☐ Add autocomplete to the new card creation form when card with the same question exists
     ☐ Enable user to finish training session manually
     ☐ Implement inline translations
     ☐ Add exception notifications via email. See Railscasts PRO #104 Exception Notifications (revised); Maybe use Graylog2 or errbit
     ☐ Display training session results after finishing training session
-    ☐ Add tags to the cards
+    ☐ Add tags to the cards, maybe use acts-as-taggable-on gem
     ☐ Allow card editing in training mode @minor
     ☐ Add training timer with idle ablilty
     ☐ Add ability to go to the previous card in the training mode
