@@ -11,7 +11,6 @@ Bugs:
 
 Improvements:
     ☐ Add "Switch keyboard language" hint @important @training_page
-    ☐ Implement shuffle mode switch, group by training interval @important @training_page
     ☐ Make the header fixed @minor
     ☐ Close current card on Esc or Enter @minor @cards_page
     ☐ Show total cards count @minor @cards_page
@@ -26,8 +25,10 @@ Improvements:
     ☐ Show "Not connected" when socket connection is not available @training_page @minor
     ☐ Improve landing page styling
     ☐ Add a button to utter the current card again @training_page @minor
+    ☐ Close socket connection when there are no cards left @minor @training_page
 
 Backlog:
+    ☐ Shuffle the wrong cards @training_page @minor
     ☐ Use rails_best_practices and rubocop gems
     ☐ Move secret tokens, passwords, etc. to the yaml config file. See railscasts YAML Configuration #85
     ☐ Add Active Admin
@@ -57,6 +58,7 @@ Hotkeys:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+    ✔ Implement shuffle mode switch, group by training interval @important @training_page @done(2016-10-11 18:46) @project(Improvements)
     ✔ Cards page: sort cards by created at desc @minor @done(2016-10-05 14:28) @project(Todo)
     ✔ Display current progress at the training page @important @done(2016-10-04 20:24) @project(Todo)
     ✔ Implement training page @done(2016-10-02 13:33) @project(Todo)

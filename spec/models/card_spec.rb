@@ -13,6 +13,10 @@ describe Card do
 
   it 'should properly initialize training_interval' do
     expect(card.training_interval).to eq(Card::INITIAL_TRAINING_INTERVAL)
+    card = FactoryGirl.build :card
+    card.training_interval = 100.days
+    card.save!
+    expect(card.reload.training_interval).to eq(100.days)
   end
 
   it 'should properly initialize next_training_time' do

@@ -11,7 +11,10 @@ end
 module WaitHelpers
   def wait_until
     Timeout.timeout(Capybara.default_max_wait_time) do
-      loop until yield
+      while true
+        break if yield
+        sleep 0.1
+      end
     end
   end
 

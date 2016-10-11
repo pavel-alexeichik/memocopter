@@ -32,7 +32,7 @@ class Card < ApplicationRecord
 
   private
   def initialize_training_interval
-    self.training_interval = INITIAL_TRAINING_INTERVAL
+    self.training_interval ||= INITIAL_TRAINING_INTERVAL
   end
 
   def initialize_next_training_time

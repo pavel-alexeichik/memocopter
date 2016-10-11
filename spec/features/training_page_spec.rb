@@ -1,14 +1,13 @@
 feature 'Training page', js: true do
   let(:user) { FactoryGirl.create(:default_user) }
-  let!(:training_cards) { user.cards.for_training.to_a }
-  let!(:training_card) { training_cards.first }
-  let!(:first_training_card) { training_card }
-  let!(:second_training_card) { training_cards.second }
-  let!(:third_training_card) { training_cards.third }
-  let!(:fourth_training_card) { training_cards.fourth }
-  let!(:fifth_training_card) { training_cards.fifth }
+  let(:cards) { user.cards.for_training }
+  let(:cards_ar) { cards.to_a.freeze }
 
   before :each do
+    visit_page unless self.class.metadata[:skip_visit_page]
+  end
+
+  def visit_page
     sign_in(user)
     visit training_path
     wait_for_cable_connection
@@ -16,6 +15,7 @@ feature 'Training page', js: true do
   end
 
   def click(action)
+    expect(page).to have_css(".#{action}-btn")
     find(".#{action}-btn").trigger 'click'
   end
 
@@ -51,57 +51,85 @@ feature 'Training page', js: true do
     expect(page).not_to have_css('.active-training-session')
   end
 
-  def expect_current_card_to_be(card)
-    card = (send "#{card}_training_card") if card.is_a?(Symbol)
-    expect_find_question card.question
-    expect_no_answer card.answer
+  def current_card
+    expect(page).to have_css('h2.question')
+    question = find('h2.question').text
+    cards_ar.find { |card| card.question == question }
   end
 
   [:click, :keypress].each do |input_type|
     scenario "#{input_type} Flip button" do
-      expect_current_card_to_be :first
+      card = current_card
+      expect_no_answer card.answer
       perform_action :flip, input_type
-      expect_find_highlighted_question training_card.question
-      expect_find_answer training_card.answer
+      expect_find_highlighted_question card.question
+      expect_find_answer card.answer
     end
 
     [:right, :wrong].each do |action|
       scenario "#{input_type} '#{action}' -> Flip buttons" do
-        expect_current_card_to_be :first
+        first_card = current_card
+        expect(current_card).to eq(first_card)
+        expect_no_answer first_card.answer
         perform_action action, input_type
-        expect_find_question second_training_card.question
+        second_card = current_card
+        expect_find_question second_card.question
         expect(page).not_to have_css('h2.question.answer-shown')
-        expect_no_answer second_training_card.answer
+        expect_no_answer second_card.answer
         perform_action :flip, input_type
-        expect_find_highlighted_question second_training_card.question
-        expect_find_answer second_training_card.answer
+        expect_find_highlighted_question second_card.question
+        expect_find_answer second_card.answer
       end
 
       scenario "#{input_type} '#{action}' button and check that next_training_time of the card changed" do
-        initial_next_training_time = training_card.next_training_time
+        card = current_card
+        initial_next_training_time = card.next_training_time
         perform_action action, input_type
         wait_until do
-          training_card.reload.next_training_time != initial_next_training_time
+          card.reload.next_training_time != initial_next_training_time
         end
       end
 
       scenario "#{input_type} '#{action}' button and check that training_interval of the card changed" do
+        card = current_card
         initial_interval = Card::MIN_TRAINING_INTERVAL * 2
-        training_card.update! training_interval: initial_interval
-        initial_interval = training_card.training_interval
+        card.update! training_interval: initial_interval
         perform_action action, input_type
         wait_until do
-          training_card.reload.training_interval != initial_interval
+          card.reload.training_interval != initial_interval
         end
       end
 
     end # right / wrong
   end # keypress / click
 
-  scenario "click right button until the end of the session and check that all training cards where displayed" do
-    training_cards.each do |card|
-      expect_current_card_to_be card
+  scenario "click right button until the end of the session and check that all training cards were displayed" do
+    actual_cards = []
+    cards_ar.count.times do
+      actual_cards << current_card
       click :right
+    end
+    expect(actual_cards).to match_array(cards_ar)
+    expect(actual_cards).not_to eq cards_ar
+    actual_cards.each_cons(2) do |c1, c2|
+      expect(c1.training_interval).to be <= c2.training_interval
+    end
+  end
+
+  scenario "create cards with different training intervals and check training order", :skip_visit_page do
+    user.cards.destroy_all
+    [3, 5, 8].each do |num|
+      num.times do
+        user.cards << FactoryGirl.build(:card, training_interval: num.days)
+      end
+    end
+    expect(user.cards.reload.count).to eq(3 + 5 + 8)
+    visit_page
+    [8, 5, 3].each do |num|
+      num.times do
+        expect(current_card.training_interval).to eq(num.days.to_i)
+        click :right
+      end
     end
     expect_training_session_finished
   end
@@ -110,8 +138,7 @@ feature 'Training page', js: true do
     let(:button_selector) { 'button.learn-wrong-cards-btn' }
     scenario 'button should be invisible while there are no wrong cards' do
       expect(page).not_to have_css(button_selector)
-      right_cards_count = training_cards.count - 2
-      training_cards.first(right_cards_count).each do |card|
+      (cards_ar.count - 2).times do
         click :right
         expect(page).not_to have_css(button_selector)
       end
@@ -122,47 +149,62 @@ feature 'Training page', js: true do
     end
 
     scenario 'mark a card as wrong and learn it in the "learn wrong cards" mode' do
+      first_card = current_card
       click :wrong
-      expect_current_card_to_be :second
+      second_card = current_card
       click 'learn-wrong-cards'
-      expect_current_card_to_be :first
+      expect(current_card).to eq(first_card)
       click :wrong
-      expect_current_card_to_be :first
+      expect(current_card).to eq(first_card)
       click :right
-      expect_current_card_to_be :second
+      expect(current_card).to eq(second_card)
     end
 
     scenario 'mark a card as wrong and check that "learn wrong cards" mode started' do
+      first_card = current_card
       click :wrong
-      (training_cards.count - 1).times { click :right }
-      expect_current_card_to_be :first
+      (cards_ar.count - 1).times { click :right }
+      expect(current_card).to eq(first_card)
       click :wrong
-      expect_current_card_to_be :first
+      expect(current_card).to eq(first_card)
       click :right
       expect_training_session_finished
     end
 
     scenario 'mark few cards as wrong and learn them' do
+      # [wwrw]w
+      wrong_cards = [current_card]
       click :wrong
+      wrong_cards << current_card
       click :wrong
+      right_card = current_card
       click :right
+      wrong_cards << current_card
       click :wrong
       click 'learn-wrong-cards'
-      expect_current_card_to_be :first
+      expect(wrong_cards).to include(current_card)
       click :wrong
-      expect_current_card_to_be :second
+      expect(wrong_cards).to include(current_card)
+      last_card = current_card
       click :right
-      expect_current_card_to_be :fourth
+      wrong_cards.delete last_card
+      expect(wrong_cards).to include(current_card)
       click :wrong
-      expect_current_card_to_be :first
+      expect(wrong_cards).to include(current_card)
+      last_card = current_card
       click :right
-      expect_current_card_to_be :fourth
+      wrong_cards.delete last_card
+      expect(wrong_cards).to include(current_card)
+      last_card = current_card
       click :right
-      expect_current_card_to_be :fifth
+      wrong_cards.delete last_card
+      expect(wrong_cards).to be_empty
+      last_card = cards.reload.order(:updated_at).first
+      expect(current_card).to eq(last_card)
       click :wrong
-      expect_current_card_to_be :fifth
+      expect(current_card).to eq(last_card)
       click :wrong
-      expect_current_card_to_be :fifth
+      expect(current_card).to eq(last_card)
       click :right
       expect_training_session_finished
     end
@@ -194,7 +236,7 @@ feature 'Training page', js: true do
   end # feature "learn wrong cards"
 
   feature 'current progress' do
-    def expect_progress(current:, total: training_cards.count)
+    def expect_progress(current:, total: cards_ar.count)
       expect(page).to have_css('.progress-text', text: "Progress: #{current} / #{total}")
       expected_percent = (current - 1) * 100 / total
       expected_style = "width: #{expected_percent}%;"
@@ -228,7 +270,7 @@ feature 'Training page', js: true do
     scenario 'learn all cards and check the progress dissapeared' do
       expect(page).to have_css('.progress-text')
       expect(page).to have_css('.progress')
-      training_cards.count.times { click :right }
+      cards_ar.count.times { click :right }
       expect_training_session_finished
       expect(page).not_to have_css('.progress-text')
       expect(page).not_to have_css('.progress')

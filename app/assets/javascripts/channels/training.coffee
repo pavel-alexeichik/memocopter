@@ -29,6 +29,7 @@ App.training = App.cable.subscriptions.create "TrainingChannel",
 
   nextCard: (fn) ->
     if @_currentCardIndex < @_cards.length
+      @_reorderCards()
       fn @_cards[@_currentCardIndex++]
     else
       if @_noCardsLeft()
@@ -44,6 +45,17 @@ App.training = App.cable.subscriptions.create "TrainingChannel",
       @_waitingForLoading.push fn
     else
       fn()
+
+  _reorderCards: ->
+    sameIntervalLastIndex = @_currentCardIndex
+    currentTrainingInterval = @_cards[@_currentCardIndex].training_interval
+    while sameIntervalLastIndex < @_cards.length
+      if @_cards[sameIntervalLastIndex].training_interval == currentTrainingInterval
+        sameIntervalLastIndex++
+      else
+        break
+    indexToSwap = Math.getRandomInt(@_currentCardIndex, sameIntervalLastIndex - 1)
+    @_cards.swap(@_currentCardIndex, indexToSwap)
 
   _noCardsLeft: -> @_currentCardIndex == @_cards.length and !@_loadingCards
 
