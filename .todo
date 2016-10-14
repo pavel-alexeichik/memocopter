@@ -8,9 +8,11 @@ Bugs:
     ☐ Flip card, click "learn wrong cards". Expected result: new card shouldn't be flipped. @minor
     ☐ Click learn wrong cards, click flip on the last item and the right. New card shouldn't be flipped @minor
     ☐ After returning from the cards page to the training page it pronounces the cards twice @minor
+    ☐ Fix "Learn 1 wrong cards" text @minor
 
 Improvements:
     ☐ Add "Switch keyboard language" hint @important @training_page
+    ☐ Change training offset to be a half of minimum training interval @important
     ☐ Make the header fixed @minor
     ☐ Close current card on Esc or Enter @minor @cards_page
     ☐ Show total cards count @minor @cards_page
@@ -26,6 +28,14 @@ Improvements:
     ☐ Improve landing page styling
     ☐ Add a button to utter the current card again @training_page @minor
     ☐ Close socket connection when there are no cards left @minor @training_page
+    ☐ Fix heroku warnings:
+        remote:        You have not declared a Ruby version in your Gemfile.
+        remote:        To set your Ruby version add this line to your Gemfile:
+        remote:        ruby '2.2.4'
+        remote:        # See https://devcenter.heroku.com/articles/ruby-versions for more information.
+        remote:        No Procfile detected, using the default web server.
+        remote:        We recommend explicitly declaring how to boot your server process via a Procfile.
+        remote:        https://devcenter.heroku.com/articles/ruby-default-web-server
 
 Backlog:
     ☐ Shuffle the wrong cards @training_page @minor
@@ -45,6 +55,7 @@ Backlog:
     ☐ Add ability to go to the previous card in the training mode
     ☐ Implement dashboard (What should be on the dashboard?)
     ☐ Add failed cards limit that defaults to 50
+    ☐ Add i18n support
 
 
 

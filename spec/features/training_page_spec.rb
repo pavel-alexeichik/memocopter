@@ -10,8 +10,7 @@ feature 'Training page', js: true do
   def visit_page
     sign_in(user)
     visit training_path
-    wait_for_cable_connection
-    wait_for_js('App.training.cardsLoading() == false')
+    expect(page).to have_css('.content-loaded')
   end
 
   def click(action)
@@ -149,15 +148,18 @@ feature 'Training page', js: true do
     end
 
     scenario 'mark a card as wrong and learn it in the "learn wrong cards" mode' do
-      first_card = current_card
-      click :wrong
-      second_card = current_card
+      wrong_cards = []
+      2.times do
+        wrong_cards << current_card
+        click :wrong
+      end
       click 'learn-wrong-cards'
-      expect(current_card).to eq(first_card)
+      expect(wrong_cards).to include(current_card)
       click :wrong
-      expect(current_card).to eq(first_card)
+      expect(wrong_cards).to include(current_card)
+      wrong_cards.delete current_card
       click :right
-      expect(current_card).to eq(second_card)
+      expect(wrong_cards).to include(current_card)
     end
 
     scenario 'mark a card as wrong and check that "learn wrong cards" mode started' do
@@ -220,7 +222,6 @@ feature 'Training page', js: true do
       expect(page).to have_content('Learn 1 wrong cards')
       4.times { click :right }
       expect_training_session_finished
-      expect(page).not_to have_content('Learn wrong cards')
     end
 
     scenario 'dynamically update "learn wrong cards" text' do
@@ -276,5 +277,24 @@ feature 'Training page', js: true do
       expect(page).not_to have_css('.progress')
     end
   end # fearure 'current progress'
+
+  scenario "reload the page and check that wrong cards persisted" do
+    wrong_cards = []
+    3.times do
+      wrong_cards << current_card
+      click :wrong
+    end
+    expect(page).to have_content('Learn 3 wrong cards')
+    visit_page
+    expect(page).to have_content('Learn 3 wrong cards')
+    click 'learn-wrong-cards'
+    3.times do
+      expect(wrong_cards).to include(current_card)
+      wrong_cards.delete current_card
+      click :right
+    end
+    2.times { click :right }
+    expect_training_session_finished
+  end
 
 end # feature Training session

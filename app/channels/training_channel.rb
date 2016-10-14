@@ -1,5 +1,8 @@
 # Be sure to restart your server when you modify this file. Action Cable runs in a loop that does not support auto reloading.
 class TrainingChannel < ApplicationCable::Channel
+  CARDS_TYPE_TRAINING = 'training_cards'
+  CARDS_TYPE_WRONG = 'wrong_cards'
+
   def subscribed
     stream_from current_stream
   end
@@ -15,9 +18,16 @@ class TrainingChannel < ApplicationCable::Channel
     card.save_training_result(training_result) unless card.blank?
   end
 
-  def preload_cards
+  def preload_training_cards
     cards = current_user.cards.for_training
-    ActionCable.server.broadcast current_stream, cards: cards
+    data = { cards_type: CARDS_TYPE_TRAINING, cards: cards }
+    ActionCable.server.broadcast current_stream, data
+  end
+
+  def preload_wrong_cards
+    cards = current_user.cards.where_last_was_wrong
+    data = { cards_type: CARDS_TYPE_WRONG, cards: cards }
+    ActionCable.server.broadcast current_stream, data
   end
 
   private

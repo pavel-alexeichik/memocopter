@@ -8,7 +8,8 @@ class Card < ApplicationRecord
   validates :answer, presence: true
   before_create :initialize_training_interval, :initialize_next_training_time  
 
-  scope :ordered_by_created_at, -> { order created_at: :desc }
+  scope :ordered_by_created_at, -> { order(created_at: :desc)  }
+  scope :where_last_was_wrong, -> { where(last_was_wrong: true)  }
 
   def self.for_training
     for_training = where('next_training_time <= ?', TRAINING_TIME_OFFSET.seconds.from_now)
@@ -20,13 +21,15 @@ class Card < ApplicationRecord
   end
 
   def save_training_result(result)
-    return if next_training_time > TRAINING_TIME_OFFSET.seconds.from_now
-    if result
-      self.training_interval *= 2
-    else
-      self.training_interval *= 0.75
+    self.last_was_wrong = !result
+    if next_training_time <= TRAINING_TIME_OFFSET.seconds.from_now
+      if result
+        self.training_interval *= 2
+      else
+        self.training_interval *= 0.75
+      end
+      self.next_training_time = training_interval.seconds.from_now
     end
-    self.next_training_time = training_interval.seconds.from_now
     save
   end
 

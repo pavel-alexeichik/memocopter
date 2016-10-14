@@ -1,72 +1,104 @@
-App.training = App.cable.subscriptions.create "TrainingChannel",
-  _cards: []
-  _currentCardIndex: 0
+class TrainingDataProvider
   _loadingCards: true # wait for the server to send initial data
   _waitingForCards: []
-  _waitingForLoading: []
+
+  constructor: ->
+    @_trainingCards = new CardsQueue()
+    @_wrongCards = new CardsQueue(true)
+    @_currentQueue = @_trainingCards
 
   connected: ->
     $('body').addClass('cable-connected')
-    @perform('preload_cards')
+    @perform('preload_training_cards')
+    @perform('preload_wrong_cards')
 
   disconnected: ->
 
   received: (data) ->
-    existingIds = @_cardsIds()
-    for newCard in data.cards
-      @_cards.push(newCard) unless existingIds[newCard.id]
+    if data.cards_type == 'training_cards'
+      @_trainingCardsReceived(data.cards)
+    else if data.cards_type == 'wrong_cards'
+      @_wrongCardsReceived(data.cards)
+    else
+      new Exception('Unknown type of cards received')
+    if @_wrongCards.isInitialized() && @_trainingCards.isInitialized()
+      @_allInitialDataReceived()
+
+  _updateListeners: []
+  onUpdate: (fn) -> @_updateListeners.push fn
+  _notifyUpdate: -> listener() for listener in @_updateListeners
+
+  learnWrongCards: ->
+    unless @isWrongCardsMode()
+      @_trainingCards.rewind()
+      @_switchQueue()
+
+  _allInitialDataReceived: ->
     @_loadingCards = false
     @nextCard(fn) for fn in @_waitingForCards
     @_waitingForCards = []
-    @onDataLoaded(fn) for fn in @_waitingForLoading
-    @_waitingForLoading = []
+    @_notifyUpdate()
 
-  cardsLoading: -> @_loadingCards
+  _trainingCardsReceived: (cards) -> @_trainingCards.add(@_filterReceivedCards(cards))
 
-  saveTrainingResult: (cardId, trainingResult) ->
-    @perform 'save_training_result', card_id: cardId, training_result: trainingResult
+  _wrongCardsReceived: (cards) -> @_wrongCards.add(@_filterReceivedCards(cards))
+
+  _filterReceivedCards: (cards) ->
+    existingIds = @_allCardsIds()
+    filteredCards = []
+    for newCard in cards
+      filteredCards.push(newCard) unless existingIds[newCard.id]
+    filteredCards
+
+  saveTrainingResult: (card, trainingResult) ->
+    unless trainingResult
+      card.last_was_wrong = true
+      if @isWrongCardsMode()
+        @_wrongCards.pushBackCurrent()
+      else
+        @_wrongCards.add(card)
+      @_notifyUpdate()
+    @perform 'save_training_result', card_id: card.id, training_result: trainingResult
     @_tryPreloadCards()
 
   nextCard: (fn) ->
-    if @_currentCardIndex < @_cards.length
-      @_reorderCards()
-      fn @_cards[@_currentCardIndex++]
+    if card = @_fetchNext()
+      fn card
     else
       if @_noCardsLeft()
         fn null
       else
         @_waitForCardsLoading fn
 
-  getCurrentCardIndex: -> @_currentCardIndex
-  getTotalCardsCount: -> @_cards.length
+  isWrongCardsMode: -> @_currentQueue == @_wrongCards
 
-  onDataLoaded: (fn) ->
-    if @_loadingCards
-      @_waitingForLoading.push fn
-    else
-      fn()
+  currentCardIndex: -> @_currentQueue.currentIndex()
+  totalCardsCount: -> @_currentQueue.count()
+  wrongCardsCount: -> @_wrongCards.count()
 
-  _reorderCards: ->
-    sameIntervalLastIndex = @_currentCardIndex
-    currentTrainingInterval = @_cards[@_currentCardIndex].training_interval
-    while sameIntervalLastIndex < @_cards.length
-      if @_cards[sameIntervalLastIndex].training_interval == currentTrainingInterval
-        sameIntervalLastIndex++
-      else
-        break
-    indexToSwap = Math.getRandomInt(@_currentCardIndex, sameIntervalLastIndex - 1)
-    @_cards.swap(@_currentCardIndex, indexToSwap)
+  _switchQueue: ->
+    @_currentQueue = if @isWrongCardsMode() then @_trainingCards else @_wrongCards
+    @_notifyUpdate()
 
-  _noCardsLeft: -> @_currentCardIndex == @_cards.length and !@_loadingCards
+  _fetchNext: ->
+    return null unless @_wrongCards.isInitialized() && @_trainingCards.isInitialized()
+    card = @_currentQueue.next()
+    unless card
+      @_switchQueue()
+      card = @_currentQueue.next()
+    @_notifyUpdate()
+    card
 
-  _cardsIds: ->
-    # new Set((@_cards.map (card) -> card.id)
-    set = {}
-    set[card.id] = true for card in @_cards
-    set
+  _noCardsLeft: -> @_currentQueue.isExhausted() and !@_loadingCards
+
+  _allCardsIds: ->
+    $.extend(@_trainingCards.existingIds(), @_wrongCards.existingIds())
 
   _tryPreloadCards: ->
-    return if @_loadingCards
-    @perform('preload_cards') if @_cards.length - @_currentCardIndex <  4
+    return if @_loadingCards || @isWrongCardsMode()
+    @perform('preload_training_cards') if @_trainingCards.isAboutToBeExhausted()
 
   _waitForCardsLoading: (fn) -> @_waitingForCards.push fn
+
+
+App.training = App.cable.subscriptions.create "TrainingChannel", new TrainingDataProvider()

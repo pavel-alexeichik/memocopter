@@ -17,4 +17,5 @@
 //= require js-routes
 //= require knockout
 //= require utils
+//= require cards_queue
 //= require_tree .

@@ -74,6 +74,19 @@ describe Card do
     end
   end
 
+  describe 'where_last_was_wrong scope' do
+    it 'should filter cards properly' do
+      user.cards.update_all(last_was_wrong: false)
+      card1 = user.cards.first
+      card1.update(last_was_wrong: true)
+      card2 = user.cards.last
+      card2.update(last_was_wrong: true)
+      ids = [card1.id, card2.id]
+      expect(user.cards.where_last_was_wrong.reload.count).to eq(2)
+      expect(user.cards.where_last_was_wrong.reload.ids).to match_array(ids)
+    end
+  end
+
   describe 'save training result' do
     let(:current_time) { Time.now }
     before(:each) do
@@ -106,7 +119,7 @@ describe Card do
       end
     end
 
-    it 'should not update training data when now is not the time for the training' do
+    it 'should not update training interval and next_time when now is not the time for the training' do
       next_training_time = Card::TRAINING_TIME_OFFSET.seconds.from_now + 1.hour
       card.update! training_interval: 2.days, next_training_time: next_training_time
       card.save_training_result(false)
@@ -115,6 +128,17 @@ describe Card do
       card.save_training_result(true)
       expect(card.reload.next_training_time).to eq(next_training_time)
       expect(card.reload.training_interval).to eq(2.days)
+    end
+
+    it 'should correctly update last_was_wrong flag' do
+      [1.year.from_now, 1.year.ago].each do |next_training_time|
+        [true, false].each do |training_result|
+          card.next_training_time = next_training_time
+          card.last_was_wrong = :stub
+          card.save_training_result training_result
+          expect(card.reload.last_was_wrong).not_to eq(training_result)
+        end
+      end
     end
   end # describe 'save training result'
 end

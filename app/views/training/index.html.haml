@@ -1,23 +1,25 @@
 #training-view
-  .active-training-session{'data-bind': 'visible: !trainingSessionFinished()'}
-    %h2.question{'data-bind': "text: currentCard().question, css: { 'answer-shown': shouldShowAnswer }"}
-    %h2.answer{'data-bind': 'text: currentCard().answer, visible: shouldShowAnswer'}
-    .card-actions
-      %button.right-btn{'data-bind': 'click: processRightAnswer'} Right
-      %button.wrong-btn{'data-bind': 'click: processWrongAnswer'} Wrong
-      %button.flip-btn{'data-bind': 'click: showAnswer'} Flip
-      .keyboard-shortcuts
-        %span.header Keyboard shortcuts:
-        %span.right-key R - right
-        %span.wrong-key W - wrong
-        %span.flip-key Space - flip
-  .finished-training-session{'data-bind': 'visible: trainingSessionFinished'}
-    %h2 There are no cards to learn at this moment
-  .learn-wrong-cards-btn-container{'data-bind': "visible: shouldShowLearnWrongCardsButton()"}
-    %button.learn-wrong-cards-btn{'data-bind': "click: learnWrongCards"}
-      %i.material-icons replay
-    &nbsp;
-    %span{'data-bind': 'text: "Learn " + wrongCards().length + " wrong cards"'}
-  .progress-text{'data-bind': "text: progress.text(), visible: !trainingSessionFinished()"}
-  .progress{'data-bind': 'visible: !trainingSessionFinished()'}
-    .determinate{'data-bind': 'style: { width: progress.percent() + "%" }'}
+  .content-loading{'data-bind': 'visible: !cardsLoaded()'} Loading Cards...
+  .content-loaded{'data-bind': 'visible: cardsLoaded'}
+    .active-training-session{'data-bind': 'visible: !trainingSessionFinished()'}
+      %h2.question{'data-bind': "text: currentCard().question, css: { 'answer-shown': shouldShowAnswer }"}
+      %h2.answer{'data-bind': 'text: currentCard().answer, visible: shouldShowAnswer'}
+      .card-actions
+        %button.right-btn{'data-bind': 'click: processRightAnswer'} Right
+        %button.wrong-btn{'data-bind': 'click: processWrongAnswer'} Wrong
+        %button.flip-btn{'data-bind': 'click: showAnswer'} Flip
+        .keyboard-shortcuts
+          %span.header Keyboard shortcuts:
+          %span.right-key R - right
+          %span.wrong-key W - wrong
+          %span.flip-key Space - flip
+    .finished-training-session{'data-bind': 'visible: trainingSessionFinished'}
+      %h2 There are no cards to learn at this moment
+    .learn-wrong-cards-btn-container{'data-bind': "visible: shouldShowLearnWrongCardsButton()"}
+      %button.learn-wrong-cards-btn{'data-bind': "click: learnWrongCards"}
+        %i.material-icons replay
+      &nbsp;
+      %span{'data-bind': 'text: "Learn " + wrongCardsCount() + " wrong cards"'}
+    .progress-text{'data-bind': "text: progress.text(), visible: !trainingSessionFinished()"}
+    .progress{'data-bind': 'visible: !trainingSessionFinished()'}
+      .determinate{'data-bind': 'style: { width: progress.percent() + "%" }'}
