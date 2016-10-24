@@ -4,6 +4,10 @@ FactoryGirl.define do
     sequence(:answer) { |n| "answer#{n}" }
     user
 
+    trait :wrong do
+      last_was_wrong true
+    end
+
     factory :newest_card do
       created_at 1.hour.from_now
     end

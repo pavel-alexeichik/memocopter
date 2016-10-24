@@ -133,6 +133,30 @@ feature 'Training page', js: true do
     expect_training_session_finished
   end
 
+  scenario "create wrong cards with different training intervals and check training order", :skip_visit_page do
+    user.cards.destroy_all
+    sorted_intervals = []
+    [3, 5, 8].each do |num|
+      num.times do
+        user.cards << FactoryGirl.build(:card, :wrong, training_interval: num.days)
+        sorted_intervals << num.days
+      end
+    end
+    sorted_intervals.reverse!
+    expect(user.cards.reload.count).to eq(3 + 5 + 8)
+    visit_page
+    actual_intervals = []
+    [8, 5, 3].each do |num|
+      num.times do
+        actual_intervals << current_card.training_interval
+        click :right
+      end
+    end
+    expect(actual_intervals).to match_array(sorted_intervals)
+    expect(actual_intervals).not_to eq(sorted_intervals)
+    expect_training_session_finished
+  end
+
   feature "learn wrong cards" do
     let(:button_selector) { 'button.learn-wrong-cards-btn' }
     scenario 'button should be invisible while there are no wrong cards' do

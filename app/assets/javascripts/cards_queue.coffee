@@ -1,9 +1,11 @@
 class @CardsQueue
   _initialized: false
   _resetOnFinish: false
+  _groupByTrainingInterval: true
 
-  constructor: (resetOnFinish) ->
-    @_resetOnFinish ||= resetOnFinish
+  constructor: (wrongCardsQueue) ->
+    @_resetOnFinish ||= wrongCardsQueue
+    @_groupByTrainingInterval = !wrongCardsQueue
     @_reset()
 
   isInitialized: -> @_initialized
@@ -47,12 +49,14 @@ class @CardsQueue
   _nextCard: -> @_cards[@_nextIndex]
 
   _reorder: ->
-    sameIntervalLastIndex = @_nextIndex
-    currentTrainingInterval = @_nextCard().training_interval
-    while sameIntervalLastIndex < @count()
-      if @_cards[sameIntervalLastIndex].training_interval == currentTrainingInterval
-        sameIntervalLastIndex++
-      else
-        break
-    indexToSwap = Math.getRandomInt(@_nextIndex, sameIntervalLastIndex - 1)
+    indexToSwap = Math.getRandomInt(@_nextIndex, @count() - 1)
+    if @_groupByTrainingInterval
+      sameIntervalLastIndex = @_nextIndex
+      currentTrainingInterval = @_nextCard().training_interval
+      while sameIntervalLastIndex < @count()
+        if @_cards[sameIntervalLastIndex].training_interval == currentTrainingInterval
+          sameIntervalLastIndex++
+        else
+          break
+      indexToSwap = Math.getRandomInt(@_nextIndex, sameIntervalLastIndex - 1)
     @_cards.swap(@_nextIndex, indexToSwap)
