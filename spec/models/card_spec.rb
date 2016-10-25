@@ -21,6 +21,10 @@ describe Card do
 
   it 'should properly initialize next_training_time' do
     expect(card.next_training_time).to eq(card.created_at)
+    next_training_time = 3.years.from_now
+    card = FactoryGirl.build :card, next_training_time: next_training_time
+    card.save!
+    expect(card.reload.next_training_time).to eq(next_training_time)
   end
 
   it 'should not allow too small values for the training_interval' do

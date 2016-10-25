@@ -39,6 +39,6 @@ class Card < ApplicationRecord
   end
 
   def initialize_next_training_time
-    self.next_training_time = created_at
+    self.next_training_time ||= created_at
   end
 end
