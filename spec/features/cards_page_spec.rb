@@ -104,10 +104,8 @@ feature 'Cards page', js: true do
     end
 
     scenario 'confirmed' do
-      within '#confirm-dialog' do
-        click_on 'Delete'
-      end
-      expect(user.cards.reload.ids).not_to include(card.id)
+      find("#confirm-dialog .confirmed-delete-btn").trigger 'click'
+      wait_until { user.cards.reload.ids.include?(card.id) == false }
       expect(page).to have_current_path(cards_path)
       expect(page).not_to have_content(card.question)
     end

@@ -1,7 +1,7 @@
 feature 'Training page', js: true do
   let(:user) { FactoryGirl.create(:default_user) }
   let(:cards) { user.cards.for_training }
-  let(:cards_ar) { cards.to_a.freeze }
+  let(:cards_ar) { user.cards.reload.to_a.freeze }
 
   before :each do
     visit_page unless self.class.metadata[:skip_visit_page]
@@ -138,12 +138,14 @@ feature 'Training page', js: true do
     sorted_intervals = []
     [3, 5, 8].each do |num|
       num.times do
-        user.cards << FactoryGirl.build(:card, :wrong, training_interval: num.days)
-        sorted_intervals << num.days
+        user.cards << FactoryGirl.build(:card, :wrong, :not_for_training, training_interval: num.days)
+        sorted_intervals << num.days.to_i
       end
     end
     sorted_intervals.reverse!
     expect(user.cards.reload.count).to eq(3 + 5 + 8)
+    expect(user.cards.for_training.count).to eq(0)
+    expect(user.cards.where_last_was_wrong.count).to eq(3 + 5 + 8)
     visit_page
     actual_intervals = []
     [8, 5, 3].each do |num|

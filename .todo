@@ -12,6 +12,7 @@ Bugs:
     ☐ Fix "Learn 1 wrong cards" text @minor
     ☐ After new cards finished, the wrong mode started but progress wasn't updated, although "Learn wrong cards" button dissaped.
     ☐ Learn wrong buttons appeared in the wrong mode. @important
+    ☐ Fix skip_visit_page in specs @important
 
     irb(main):001:0> Card.where_last_was_wrong.pluck :question
 D, [2016-10-24T05:48:01.897202 #3] DEBUG -- :    (1.3ms)  SELECT "cards"."question" FROM "cards" WHERE "cards"."last_was_wrong" = $1  [["last_was_wrong", true]]

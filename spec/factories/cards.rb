@@ -6,6 +6,7 @@ FactoryGirl.define do
 
     trait :wrong do
       last_was_wrong true
+      next_training_time 5.days.from_now
     end
 
     trait :not_for_training do
