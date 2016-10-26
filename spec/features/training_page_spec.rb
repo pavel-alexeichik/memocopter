@@ -158,6 +158,30 @@ feature 'Training page', js: true do
     expect(actual_intervals).not_to eq(sorted_intervals)
     expect_training_session_finished
   end
+  
+  scenario "check that a wrong card doesn't appear twice before others", :skip_visit_page do
+    wrong_cards = []
+    7.times do
+      card = FactoryGirl.build(:card, :wrong, :not_for_training, next_training_time: 2.days.from_now)
+      user.cards << card
+      wrong_cards << card
+    end
+    expect(user.cards.reload.count).to eq(5 + 7)
+    visit_page
+    2.times do
+      wrong_cards << current_card
+      click :wrong
+    end
+    click 'learn-wrong-cards'
+    2.times do
+      shown_wrong_cards = []
+      9.times do
+        shown_wrong_cards << current_card
+        click :wrong
+      end
+      expect(shown_wrong_cards).to match_array(wrong_cards)
+    end
+  end
 
   feature "learn wrong cards" do
     let(:button_selector) { 'button.learn-wrong-cards-btn' }

@@ -18,7 +18,9 @@ class @CardsQueue
   next: ->
     if @isInitialized() && @_nextIndex < @count()
       @_reorder()
-      return @_cards[@_nextIndex++]
+      card = @_cards[@_nextIndex++]
+      @_usedCardsIds[card.id] = true
+      return card
     else
       @_reset() if @_resetOnFinish
       return null
@@ -32,6 +34,7 @@ class @CardsQueue
   _reset: ->
     @_nextIndex = 0
     @_cards = []
+    @_usedCardsIds = []
 
   pushBackCurrent: ->
     @_nextIndex--
@@ -49,7 +52,7 @@ class @CardsQueue
   _nextCard: -> @_cards[@_nextIndex]
 
   _reorder: ->
-    indexToSwap = Math.getRandomInt(@_nextIndex, @count() - 1)
+    lastAvailableIndex = @count() - 1
     if @_groupByTrainingInterval
       sameIntervalLastIndex = @_nextIndex
       currentTrainingInterval = @_nextCard().training_interval
@@ -58,5 +61,18 @@ class @CardsQueue
           sameIntervalLastIndex++
         else
           break
-      indexToSwap = Math.getRandomInt(@_nextIndex, sameIntervalLastIndex - 1)
+      lastAvailableIndex = sameIntervalLastIndex - 1
+    indexToSwap = @_getRandomAvailableIndex(lastAvailableIndex)
     @_cards.swap(@_nextIndex, indexToSwap)
+
+  _getRandomAvailableIndex: (lastAvailableIndex) ->
+    availableIndexes = []
+    for index in [@_nextIndex..lastAvailableIndex] by 1
+      continue if @_usedCardsIds[@_cards[index].id]
+      availableIndexes.push index
+    if availableIndexes.length > 0
+      rand = Math.getRandomInt(0, availableIndexes.length - 1)
+      return availableIndexes[rand]
+    else
+      @_usedCardsIds = []
+      return Math.getRandomInt(@_nextIndex, @count() - 1)

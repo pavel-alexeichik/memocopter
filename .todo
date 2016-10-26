@@ -25,6 +25,7 @@ Improvements:
     ☐ Add "Switch keyboard language" hint @important @training_page
     ☐ Indicate "Learning wrong cards" @training_page @important
     ✔ Don't group wrong cards by training interval @training_page @important @done(2016-10-24 09:18) @project(Improvements)
+    ✔ Make wrong cards to appear once in a set @training_page @important @done(2016-10-26 19:10) @project(Improvements)
     ☐ Change training offset to be a half of minimum training interval @important
     ☐ Make the header fixed @minor
     ☐ Close current card on Esc or Enter @minor @cards_page
@@ -52,7 +53,7 @@ Improvements:
         remote:        https://devcenter.heroku.com/articles/ruby-default-web-server
 
 Backlog:
-    ☐ Shuffle the wrong cards @training_page @minor
+    ☐ Implement full text search @cards_page @important
     ☐ Add vocab profiler @important
     ☐ Use rails_best_practices and rubocop gems. Checkout reek! rcov
     ☐ Move secret tokens, passwords, etc. to the yaml config file. See railscasts YAML Configuration #85
