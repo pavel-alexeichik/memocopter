@@ -60,6 +60,16 @@ describe Card do
       expect(cards.first.training_interval).to eq(cards.count.days)
       expect(cards.last.training_interval).to eq(1.day)
     end
+
+    it 'should not include cards that marked as wrong' do
+      user.cards.each { |card| card.update(next_training_time: 1.year.from_now) }
+      wrong_card = FactoryGirl.create(:card, :wrong)
+      ready_card = FactoryGirl.create(:card)
+      user.cards << wrong_card
+      user.cards << ready_card
+      expect(user.cards.for_training.ids).to eq([ready_card.id])
+    end
+
   end
 
   describe 'ordered_by_created_at scope' do
@@ -88,6 +98,19 @@ describe Card do
       ids = [card1.id, card2.id]
       expect(user.cards.where_last_was_wrong.reload.count).to eq(2)
       expect(user.cards.where_last_was_wrong.reload.ids).to match_array(ids)
+    end
+  end
+
+  describe 'where_last_was_right scope' do
+    it 'should filter cards properly' do
+      user.cards.update_all(last_was_wrong: true)
+      card1 = user.cards.first
+      card1.update(last_was_wrong: false)
+      card2 = user.cards.last
+      card2.update(last_was_wrong: false)
+      ids = [card1.id, card2.id]
+      expect(user.cards.where_last_was_right.reload.count).to eq(2)
+      expect(user.cards.where_last_was_right.reload.ids).to match_array(ids)
     end
   end
 

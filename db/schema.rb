@@ -10,20 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012134941) do
+ActiveRecord::Schema.define(version: 20161026165904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cards", force: :cascade do |t|
-    t.integer  "user_id",            null: false
-    t.string   "question",           null: false
-    t.string   "answer",             null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.integer  "user_id",                            null: false
+    t.string   "question",                           null: false
+    t.string   "answer",                             null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.datetime "next_training_time"
     t.integer  "training_interval"
-    t.boolean  "last_was_wrong"
+    t.boolean  "last_was_wrong",     default: false
     t.index ["last_was_wrong"], name: "index_cards_on_last_was_wrong", using: :btree
     t.index ["next_training_time", "training_interval"], name: "index_cards_on_next_training_time_and_training_interval", using: :btree
     t.index ["user_id"], name: "index_cards_on_user_id", using: :btree

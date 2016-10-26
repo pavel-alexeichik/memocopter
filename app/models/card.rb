@@ -10,10 +10,11 @@ class Card < ApplicationRecord
 
   scope :ordered_by_created_at, -> { order(created_at: :desc)  }
   scope :where_last_was_wrong, -> { where(last_was_wrong: true)  }
+  scope :where_last_was_right, -> { where(last_was_wrong: false)  }
 
   def self.for_training
     for_training = where('next_training_time <= ?', TRAINING_TIME_OFFSET.seconds.from_now)
-    for_training.order(training_interval: :desc)
+    for_training.order(training_interval: :desc).where_last_was_right
   end
 
   def training_interval=(value)

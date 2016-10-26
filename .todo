@@ -10,16 +10,9 @@ Bugs:
     ☐ Click learn wrong cards, click flip on the last item and the right. New card shouldn't be flipped @minor
     ☐ After returning from the cards page to the training page it pronounces the cards twice @minor
     ☐ Fix "Learn 1 wrong cards" text @minor
-    ☐ After new cards finished, the wrong mode started but progress wasn't updated, although "Learn wrong cards" button dissaped.
-    ☐ Learn wrong buttons appeared in the wrong mode. @important
+    ✔ After new cards finished, the wrong mode started but progress wasn't updated, although "Learn wrong cards" button dissaped. @done(2016-10-26 20:04) @project(Bugs)
+    ✔ Learn wrong buttons appeared in the wrong mode. @important @done(2016-10-26 20:04) @project(Bugs)
     ☐ Fix skip_visit_page in specs @important
-
-    irb(main):001:0> Card.where_last_was_wrong.pluck :question
-D, [2016-10-24T05:48:01.897202 #3] DEBUG -- :    (1.3ms)  SELECT "cards"."question" FROM "cards" WHERE "cards"."last_was_wrong" = $1  [["last_was_wrong", true]]
-=> ["plunge", "flog", "potassium", "unravel", "sulfur", "hatch", "comprehensive", "remediation", "muddy", "divorce", "stink", "excess", "negligence", "stray", "dip", "embarrassed", "coherence", "surplus"]
-irb(main):002:0> Card.for_training.pluck :question
-D, [2016-10-24T05:48:43.987536 #3] DEBUG -- :    (1.8ms)  SELECT "cards"."question" FROM "cards" WHERE (next_training_time <= '2016-10-24 17:48:43.984789') ORDER BY "cards"."training_interval" DESC
-=> ["reprehension", "cohesion", "stink", "divorce", "strand", "excess", "surplus", "coherence", "embarrassed", "dip", "stray", "negligence"]
 
 Improvements:
     ☐ Add "Switch keyboard language" hint @important @training_page
