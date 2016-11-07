@@ -5,10 +5,6 @@ Rails.application.routes.draw do
     get 'training', to: 'training#index', as: :training
   end
 
-  unauthenticated :user do #-> if user is not logged in
-    root 'home#landing', as: :unauthenticated
-  end
-
   devise_for :users, skip: [:registrations], controllers: {
     sessions: 'sessions'
   }
@@ -16,4 +12,8 @@ Rails.application.routes.draw do
     post 'signup', to: 'devise/registrations#create', as: :user_registration
   end
 
+  unauthenticated :user do #-> if user is not logged in
+    root 'home#landing', as: :unauthenticated
+    get '*anypath', to: redirect('/')
+  end
 end

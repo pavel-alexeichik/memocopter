@@ -14,4 +14,11 @@ feature 'Log In', js: true do
     LoginForm.new.visit_page.fill_in_with(user).submit
     expect(page).to have_content("Incorrect password or email")
   end
+
+  scenario 'log out and try to go to some page' do
+    visit '/training'
+    expect(current_path).to eq('/')
+    visit '/some/unexisting/page'
+    expect(current_path).to eq('/')
+  end
 end
