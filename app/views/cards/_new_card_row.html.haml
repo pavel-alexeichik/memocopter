@@ -3,7 +3,7 @@
     %i.material-icons add
     %span Add new card
   .collapsible-body
-    = form_for @new_card, remote: true do |f|
+    = form_for new_card, remote: true do |f|
       .row
         .input-field.col.s12
           = f.text_field :question, class: 'grab-focus',

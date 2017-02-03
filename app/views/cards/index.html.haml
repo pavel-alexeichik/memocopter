@@ -1,7 +1,7 @@
 %h1 Cards
 
 %ul.collapsible.cards-collection.popout
-  = render 'new_card_row'
+  = render 'new_card_row', new_card: @new_card
   - @cards.each do |card|
     %li.card-row
       .card-id.hide<
