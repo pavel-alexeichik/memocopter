@@ -6,5 +6,4 @@ class SessionsController < Devise::SessionsController
     self.resource = warden.authenticate(auth_options)
     sign_in(resource_name, resource) if user_signed_in?
   end
-
 end

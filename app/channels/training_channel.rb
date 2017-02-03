@@ -1,7 +1,8 @@
-# Be sure to restart your server when you modify this file. Action Cable runs in a loop that does not support auto reloading.
+# Be sure to restart your server when you modify this file.
+# Action Cable runs in a loop that does not support auto reloading.
 class TrainingChannel < ApplicationCable::Channel
-  CARDS_TYPE_TRAINING = 'training_cards'
-  CARDS_TYPE_WRONG = 'wrong_cards'
+  CARDS_TYPE_TRAINING = 'training_cards'.freeze
+  CARDS_TYPE_WRONG = 'wrong_cards'.freeze
 
   def subscribed
     stream_from current_stream
@@ -14,7 +15,7 @@ class TrainingChannel < ApplicationCable::Channel
   def save_training_result(data)
     card_id = data['card_id']
     training_result = data['training_result']
-    card = current_user.cards.find_by_id(card_id)
+    card = current_user.cards.find_by(id: card_id)
     card.save_training_result(training_result) unless card.blank?
   end
 
@@ -31,6 +32,7 @@ class TrainingChannel < ApplicationCable::Channel
   end
 
   private
+
   def current_stream
     "training_channel_#{current_user.id}"
   end

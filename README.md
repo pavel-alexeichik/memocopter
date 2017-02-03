@@ -5,7 +5,14 @@ Running the app:
   or
   $ foreman start
 
+Running specs:
+  $ rspec
 
+Running rubocop:
+  $ rubocop
+
+
+------------------------
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

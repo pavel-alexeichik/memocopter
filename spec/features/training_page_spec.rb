@@ -3,7 +3,7 @@ feature 'Training page', js: true do
   let(:cards) { user.cards.for_training }
   let(:cards_ar) { user.cards.reload.to_a.freeze }
 
-  before :each do
+  before do
     visit_page unless self.class.metadata[:skip_visit_page]
   end
 
@@ -20,7 +20,7 @@ feature 'Training page', js: true do
 
   def keypress(action)
     key_by_action = { right: :r, wrong: :w, flip: :space }
-    fail unless key_by_action[action]
+    raise unless key_by_action[action]
     find('body').send_keys key_by_action[action]
   end
 
@@ -80,7 +80,7 @@ feature 'Training page', js: true do
         expect_find_answer second_card.answer
       end
 
-      scenario "#{input_type} '#{action}' button and check that next_training_time of the card changed" do
+      scenario "#{input_type} '#{action}' button and check that card's next_training_time changed" do
         card = current_card
         initial_next_training_time = card.next_training_time
         perform_action action, input_type
@@ -89,7 +89,7 @@ feature 'Training page', js: true do
         end
       end
 
-      scenario "#{input_type} '#{action}' button and check that training_interval of the card changed" do
+      scenario "#{input_type} '#{action}' button and check that card's training_interval changed" do
         card = current_card
         initial_interval = Card::MIN_TRAINING_INTERVAL * 2
         card.update! training_interval: initial_interval
@@ -98,11 +98,10 @@ feature 'Training page', js: true do
           card.reload.training_interval != initial_interval
         end
       end
-
     end # right / wrong
   end # keypress / click
 
-  scenario "click right button until the end of the session and check that all training cards were displayed" do
+  scenario 'click right button until the end of the session and check that all training cards were displayed' do
     actual_cards = []
     cards_ar.count.times do
       actual_cards << current_card
@@ -115,7 +114,7 @@ feature 'Training page', js: true do
     end
   end
 
-  scenario "create cards with different training intervals and check training order", :skip_visit_page do
+  scenario 'create cards with different training intervals and check training order', :skip_visit_page do
     user.cards.destroy_all
     [3, 5, 8].each do |num|
       num.times do
@@ -133,7 +132,7 @@ feature 'Training page', js: true do
     expect_training_session_finished
   end
 
-  scenario "create wrong cards with different training intervals and check training order", :skip_visit_page do
+  scenario 'create wrong cards with different training intervals and check training order', :skip_visit_page do
     user.cards.destroy_all
     sorted_intervals = []
     [3, 5, 8].each do |num|
@@ -158,7 +157,7 @@ feature 'Training page', js: true do
     expect(actual_intervals).not_to eq(sorted_intervals)
     expect_training_session_finished
   end
-  
+
   scenario "check that a wrong card doesn't appear twice before others", :skip_visit_page do
     wrong_cards = []
     7.times do
@@ -183,7 +182,7 @@ feature 'Training page', js: true do
     end
   end
 
-  feature "learn wrong cards" do
+  feature 'learn wrong cards' do
     let(:button_selector) { 'button.learn-wrong-cards-btn' }
     scenario 'button should be invisible while there are no wrong cards' do
       expect(page).not_to have_css(button_selector)
@@ -229,7 +228,6 @@ feature 'Training page', js: true do
       click :wrong
       wrong_cards << current_card
       click :wrong
-      right_card = current_card
       click :right
       wrong_cards << current_card
       click :wrong
@@ -328,7 +326,7 @@ feature 'Training page', js: true do
     end
   end # fearure 'current progress'
 
-  scenario "reload the page and check that wrong cards persisted" do
+  scenario 'reload the page and check that wrong cards persisted' do
     wrong_cards = []
     3.times do
       wrong_cards << current_card
@@ -346,5 +344,4 @@ feature 'Training page', js: true do
     2.times { click :right }
     expect_training_session_finished
   end
-
 end # feature Training session

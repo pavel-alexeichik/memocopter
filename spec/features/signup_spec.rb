@@ -20,6 +20,6 @@ feature 'Sign Up' do
   scenario 'cannot sign up with existing email' do
     user = FactoryGirl.create(:default_user)
     SignupForm.new.visit_page.fill_in_with(user).submit
-    expect(page).to have_content("Email has already been taken")
+    expect(page).to have_content('Email has already been taken')
   end
 end

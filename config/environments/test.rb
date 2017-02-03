@@ -43,5 +43,5 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  Rails.application.config.action_cable.allowed_request_origins = [/http:\/\/127.0.0.1.*/]
+  Rails.application.config.action_cable.allowed_request_origins = [%r{http:\/\/127.0.0.1.*}]
 end

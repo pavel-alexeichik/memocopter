@@ -7,5 +7,4 @@ class User < ApplicationRecord
   has_many :cards
 
   validates :display_name, presence: true
-
 end

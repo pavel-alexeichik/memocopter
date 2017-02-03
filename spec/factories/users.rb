@@ -12,11 +12,11 @@ FactoryGirl.define do
       end
 
       factory :default_user do
-        email "default_user_email@test.com"
+        email 'default_user_email@test.com'
       end
 
       factory :second_user do
-        email "second_user_email@test.com"
+        email 'second_user_email@test.com'
       end
     end
   end
