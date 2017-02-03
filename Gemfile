@@ -61,6 +61,7 @@ group :development do
   gem 'hirb'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'rails_best_practices'
 end
 
 group :test do

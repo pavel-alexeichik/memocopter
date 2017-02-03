@@ -11,6 +11,9 @@ Running specs:
 Running rubocop:
   $ rubocop
 
+Running rails_best_practices:
+  $ rails_best_practices .
+
 
 ------------------------
 This README would normally document whatever steps are necessary to get the
