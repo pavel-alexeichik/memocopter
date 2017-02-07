@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     root 'home#dashboard', as: :dashboard
     resources :cards, only: [:index, :create, :update, :destroy]
     get 'training', to: 'training#index', as: :training
+    ActiveAdmin.routes(self)
   end
 
   devise_for :users, skip: [:registrations], controllers: {

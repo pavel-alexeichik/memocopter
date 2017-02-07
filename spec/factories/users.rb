@@ -5,6 +5,11 @@ FactoryGirl.define do
     password 'qweasd'
     password_confirmation 'qweasd'
 
+    factory :admin_user do
+      email 'admin_user_email@test.com'
+      admin true
+    end
+
     factory :user_with_cards do
       transient { cards_count 5 }
       after(:create) do |user, evaluator|
