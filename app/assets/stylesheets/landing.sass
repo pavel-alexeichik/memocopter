@@ -19,7 +19,7 @@
   .signin-form, .signup-form
     width: 40%
     float: right
-    margin-top: 12%
+    margin-top: 20%
     .actions
       .btn, span, a
         float: left
@@ -29,13 +29,17 @@
         margin: 0 10px
 
   .app-title-wrapper
-    width: 60%
-    padding-top: 10%
+    width: 40%
+    margin-top: 20%
     float: left
 
   h1.app-title
     font-size: 6.85353rem
     font-weight: 700
+    margin-top: 0
+
+  h2.app-description
+    white-space: nowrap
 
   .nav-links-wrapper
     overflow: hidden
@@ -45,3 +49,8 @@
       float: right
       border: none
       text-transform: capitalize
+
+  @media only screen and (max-width: 1400px)
+    .signup-form, .app-title-wrapper
+      width: 100%
+      margin-top: 20px
