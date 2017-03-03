@@ -7,8 +7,9 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-  %body{class: "#{controller_name}-controller"}
+  %body{class: "#{controller_name}-controller #{action_name}-action"}
     = render 'shared/navbar'
     %main.main-content-wrapper
       = yield
-    = render 'shared/footer'
+    - unless current_user.blank? # skip landing page
+      = render 'shared/footer'
