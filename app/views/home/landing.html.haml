@@ -7,13 +7,8 @@
   %h2.app-description Simple flash cards app
 
 
--# .signup-form
--#   = render 'devise/registrations/new'
+.signup-form
+  = render 'devise/registrations/new'
 
-.signin-form
+.signin-form.hide
   = render 'devise/sessions/new'
-
-.signup-or-try-wrapper
-  = link_to 'Create new account', '#'
-  &nbsp;or&nbsp;
-  = link_to 'Try as guest', '#'

@@ -3,19 +3,30 @@
     color: white
     font-family: Comfortaa
 
+  a
+    text-transform: uppercase
+    border-bottom: 1px solid white
+    padding-bottom: 5px
+    float: right
+    &:hover
+      border-bottom: 2px solid white
+
   main
-    @include linearGradient(#71ba51, #10b267)
+    @extend .blue-grey, .darken-1
     padding: 30px 10%
     color: white
 
-  .signup-form
-    width: 30%
-    margin: 30px
-
-  .signin-form
-    width: 30%
-    margin-top: 70px
+  .signin-form, .signup-form
+    width: 40%
     float: right
+    margin-top: 12%
+    .actions
+      .btn, span, a
+        float: left
+        height: 36px
+        line-height: 36px
+      span
+        margin: 0 10px
 
   .app-title-wrapper
     width: 60%
@@ -34,17 +45,3 @@
       float: right
       border: none
       text-transform: capitalize
-
-  a
-    text-transform: uppercase
-    border-bottom: 1px solid white
-    padding-bottom: 5px
-    float: right
-    &:hover
-      border-bottom: 1px solid black
-
-  .signup-or-try-wrapper
-    width: 100%
-    float: left
-
-
