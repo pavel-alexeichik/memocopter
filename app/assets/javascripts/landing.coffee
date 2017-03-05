@@ -20,8 +20,8 @@ class Landing
     setTimeout (-> $(selector).focus()), 650
 
   _toggleSignInUpLinks: ->
-    $('a.sign-in').removeClass('hide').toggle()
-    $('a.sign-up').removeClass('hide').toggle()
+    $('a.sign-in').toggleClass('hide')
+    $('a.sign-up').toggleClass('hide')
 
   _showForm: (selector) ->
     $(selector).removeClass('hide').hide().delay(600).show(0)
