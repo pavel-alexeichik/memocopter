@@ -1,17 +1,41 @@
+class Landing
+  showError: (message) ->
+    $('.error-messages').removeClass('hide').show().html message
+
+  hideErrors: -> $('.error-messages').hide()
+
+  showSignInForm: ->
+    $('.signup-form').fadeOut(600)
+    @_showForm '.signin-form'
+    @_toggleSignInUpLinks()
+    @_focus('.signin-form #user_email')
+
+  showSignUpForm: ->
+    $('.signin-form').fadeOut(600)
+    @_showForm '.signup-form'
+    @_toggleSignInUpLinks()
+    @_focus('.signup-form #user_display_name')
+
+  _focus: (selector) ->
+    setTimeout (-> $(selector).focus()), 650
+
+  _toggleSignInUpLinks: ->
+    $('a.sign-in').removeClass('hide').toggle()
+    $('a.sign-up').removeClass('hide').toggle()
+
+  _showForm: (selector) ->
+    $(selector).removeClass('hide').hide().delay(600).show(0)
+
+
 $('body.home-controller.landing-action').onPageLoad ->
+  App.landing = new Landing()
+
+  $('.signin-form input, .signup-form input').keyup -> App.landing.hideErrors()
+
   $('a.sign-in').click (e) ->
     e.preventDefault()
-    $('.signup-form').fadeOut(600)
-    $('.signin-form').removeClass('hide').hide().delay(600).show(0)
-    $('a.sign-up').removeClass('hide').show()
-    $('a.sign-in').hide()
-    setTimeout (-> $('.signin-form #user_email').focus()), 650
+    App.landing.showSignInForm()
 
   $('a.sign-up').click (e) ->
     e.preventDefault()
-    $('.signin-form').fadeOut(600)
-    $('.signup-form').removeClass('hide').hide().delay(600).show(0)
-    $('a.sign-in').removeClass('hide').show()
-    $('a.sign-up').hide()
-    $('.signup-form #user_display_name').focus().select()
-    setTimeout (-> $('.signup-form #user_display_name').focus()), 650
+    App.landing.showSignUpForm()

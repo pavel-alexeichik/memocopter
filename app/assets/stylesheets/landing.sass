@@ -17,6 +17,7 @@
     color: white
 
   .signin-form, .signup-form
+    position: relative
     width: 40%
     float: right
     margin-top: 20%
@@ -27,8 +28,15 @@
         line-height: 36px
       span
         margin: 0 10px
+    .error-messages
+      position: absolute
+      left: 0
+      top: -36px
+      color: red
   .signin-form
     padding-top: 36px
+    .error-messages
+      top: 0
 
   .app-title-wrapper
     width: 40%
