@@ -101,4 +101,5 @@ class TrainingDataProvider
   _waitForCardsLoading: (fn) -> @_waitingForCards.push fn
 
 
-App.training = App.cable.subscriptions.create "TrainingChannel", new TrainingDataProvider()
+$('body.training-controller').onPageLoad ->
+  App.training = App.cable.subscriptions.create "TrainingChannel", new TrainingDataProvider()
