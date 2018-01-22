@@ -26,8 +26,7 @@ class Landing
   _showForm: (selector) ->
     $(selector).removeClass('hide').hide().delay(600).show(0)
 
-
-$('body.home-controller.landing-action').onPageLoad ->
+@App.onPageLoad 'body.home-controller.landing-action', ->
   App.landing = new Landing()
 
   $('.signin-form input, .signup-form input').keyup -> App.landing.hideErrors()

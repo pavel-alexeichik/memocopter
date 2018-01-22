@@ -10,9 +10,7 @@ Array.prototype.swap = (x, y) ->
 # Using Math.round() will give you a non-uniform distribution!
 Math.getRandomInt = (min, max) -> Math.floor(Math.random() * (max - min + 1)) + min
 
-$.fn.onPageLoad = (fn) ->
-  if this.selector
-    $(document).on 'turbolinks:load', =>
-      $(this.selector, this.context).each fn
-  else
-    $(document).on 'turbolinks:load', fn
+@App || (@App = {})
+@App.onPageLoad = (selector, fn) ->
+  $(document).on 'turbolinks:load', =>
+    $(selector).each fn

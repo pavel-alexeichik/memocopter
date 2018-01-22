@@ -59,7 +59,7 @@ class CardsViewModel
       dataType:'json'
       data: cardJson
 
-$('body.cards-controller').onPageLoad ->
+@App.onPageLoad 'body.cards-controller', ->
   $('.modal-trigger').leanModal()
   $('.collapsible.cards-collection').collapsible()
   cardsViewModel = new CardsViewModel()
