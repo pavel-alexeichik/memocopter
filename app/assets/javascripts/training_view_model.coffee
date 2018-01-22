@@ -63,7 +63,7 @@ class Progress
   total: -> @_dataProvider().totalCardsCount()
 
 
-$('body.training-controller').onPageLoad ->
+@App.onPageLoad 'body.training-controller', ->
   window.tvm = new TrainingViewModel()
   ko.applyBindings(tvm, $('#training-view').get(0))
   $(document).bind 'keypress.training', (event) ->

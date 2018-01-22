@@ -1,29 +1,15 @@
-%h2 Sign up
-= form_for(@user, url: user_registration_path) do |f|
+= form_for(@user, url: user_registration_path,
+    html: { 'data-type': 'json' },
+    remote: true) do |f|
   / = devise_error_messages!
   .field
-    = f.label :display_name
-    %br/
-    = f.text_field :display_name
-
+    = f.text_field :display_name, placeholder: 'Pick a username', autofocus: true
   .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-
+    = f.email_field :email, placeholder: 'Your email address', type: 'email'
   .field
-    = f.label :password
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
+    = f.password_field :password, autocomplete: "off", placeholder: 'Create a password'
 
   .actions
-    = f.submit "Sign up"
-/ # = render "devise/shared/links"
+    = f.submit "Sign up", class: 'btn waves-effect waves-light'
+    %span &nbsp;or&nbsp;
+    = link_to 'Try as guest', class: 'try-as-guest'

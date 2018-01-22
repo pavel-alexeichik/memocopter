@@ -1,0 +1,66 @@
+.landing-action
+  h1, h2, a
+    color: white
+    font-family: Comfortaa
+
+  a
+    text-transform: uppercase
+    border-bottom: 1px solid white
+    padding-bottom: 5px
+    float: right
+    &:hover
+      border-bottom: 2px solid white
+
+  main
+    @extend .blue-grey, .darken-1
+    padding: 30px 10%
+    color: white
+
+  .signin-form, .signup-form
+    position: relative
+    width: 40%
+    float: right
+    margin-top: 20%
+    .actions
+      .btn, span, a
+        float: left
+        height: 36px
+        line-height: 36px
+      span
+        margin: 0 10px
+    .error-messages
+      position: absolute
+      left: 0
+      top: -36px
+      color: red
+  .signin-form
+    padding-top: 36px
+    .error-messages
+      top: 0
+
+  .app-title-wrapper
+    width: 40%
+    margin-top: 20%
+    float: left
+
+  h1.app-title
+    font-size: 6.85353rem
+    font-weight: 700
+    margin-top: 0
+
+  h2.app-description
+    white-space: nowrap
+
+  .nav-links-wrapper
+    overflow: hidden
+    .github
+      float: left
+    a.sign-in, a.sign-up
+      float: right
+      border: none
+      text-transform: capitalize
+
+  @media only screen and (max-width: 1400px)
+    .signup-form, .signin-form, .app-title-wrapper
+      width: 100%
+      margin-top: 20px

@@ -1,3 +1,17 @@
-Landing
-= render 'devise/registrations/new'
-= render 'devise/sessions/new'
+.nav-links-wrapper
+  = link_to 'Github', '#', class: :github
+  = link_to 'Sign in', '#', class: 'sign-in'
+  = link_to 'Sign up', '#', class: 'sign-up hide'
+
+.app-title-wrapper
+  %h1.app-title Memocopter
+  %h2.app-description Simple flash cards app
+
+
+.signup-form
+  .error-messages.hide
+  = render 'devise/registrations/new'
+
+.signin-form.hide
+  .error-messages.hide
+  = render 'devise/sessions/new'
