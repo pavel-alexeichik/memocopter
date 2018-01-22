@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     sessions: 'sessions'
   }
   devise_scope :user do
-    post 'signup', to: 'devise/registrations#create', as: :user_registration
+    post 'signup', to: 'registrations#create', as: :user_registration
   end
 
   unauthenticated :user do #-> if user is not logged in

@@ -1,4 +1,6 @@
-= form_for(@user, url: user_registration_path) do |f|
+= form_for(@user, url: user_registration_path,
+    html: { 'data-type': 'json' },
+    remote: true) do |f|
   / = devise_error_messages!
   .field
     = f.text_field :display_name, placeholder: 'Pick a username', autofocus: true
@@ -11,5 +13,3 @@
     = f.submit "Sign up", class: 'btn waves-effect waves-light'
     %span &nbsp;or&nbsp;
     = link_to 'Try as guest', class: 'try-as-guest'
-
-/ # = render "devise/shared/links"
