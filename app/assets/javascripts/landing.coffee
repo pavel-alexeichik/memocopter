@@ -6,12 +6,14 @@ class Landing
 
   showSignInForm: ->
     $('.signup-form').fadeOut(600)
+    @hideErrors()
     @_showForm '.signin-form'
     @_toggleSignInUpLinks()
     @_focus('.signin-form #user_email')
 
   showSignUpForm: ->
     $('.signin-form').fadeOut(600)
+    @hideErrors()
     @_showForm '.signup-form'
     @_toggleSignInUpLinks()
     @_focus('.signup-form #user_display_name')
