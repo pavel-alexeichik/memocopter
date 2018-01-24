@@ -1,7 +1,7 @@
 require_relative '../support/login_form.rb'
 
 feature 'Log In', js: true do
-  let!(:user) { FactoryGirl.create(:default_user) }
+  let!(:user) { create(:default_user) }
 
   scenario 'login with valid user data' do
     expect(User.last.email).to eq(user.email)

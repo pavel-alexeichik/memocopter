@@ -1,5 +1,5 @@
 feature 'Sign Out', js: true do
-  let(:user) { FactoryGirl.create(:default_user) }
+  let(:user) { create(:default_user) }
 
   scenario 'sign out from the cards page' do
     sign_in(user)

@@ -1,7 +1,7 @@
 require_relative '../support/signup_form.rb'
 
 feature 'Sign Up', js: true do
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { build(:user) }
 
   scenario 'sign up with valid user data' do
     SignupForm.new.visit_page.fill_in_with(user).submit
@@ -30,7 +30,7 @@ feature 'Sign Up', js: true do
   end
 
   scenario 'cannot sign up with existing email' do
-    user = FactoryGirl.create(:default_user)
+    user = create(:default_user)
     SignupForm.new.visit_page.fill_in_with(user).submit
     expect(page).to have_content('Email has already been taken')
   end

@@ -2,8 +2,8 @@ require_relative '../support/login_form.rb'
 
 feature 'Admin page', js: true do
   let!(:admin_route) { '/admin' }
-  let!(:regular_user) { FactoryGirl.create(:default_user) }
-  let!(:admin_user) { FactoryGirl.create(:admin_user) }
+  let!(:regular_user) { create(:default_user) }
+  let!(:admin_user) { create(:admin_user) }
 
   scenario 'visit admin page by admin user' do
     sign_in(admin_user)

@@ -1,5 +1,5 @@
 describe Card do
-  let(:user) { FactoryGirl.create(:default_user) }
+  let(:user) { create(:default_user) }
   let(:card) { user.cards.first }
 
   it 'has valid factory' do
@@ -19,7 +19,7 @@ describe Card do
 
   context 'when card created with initialized #training_interval' do
     it 'persists the given value' do
-      card = FactoryGirl.build :card
+      card = build :card
       card.training_interval = 100.days
       card.save!
       expect(card.reload.training_interval).to eq(100.days)
@@ -35,7 +35,7 @@ describe Card do
   context 'when card created with initialized #next_training_time' do
     it 'persists the given value' do
       next_training_time = 3.years.from_now
-      card = FactoryGirl.build :card, next_training_time: next_training_time
+      card = build :card, next_training_time: next_training_time
       card.save!
       expect(card.reload.next_training_time).to eq(next_training_time)
     end
@@ -82,8 +82,8 @@ describe Card do
 
     it 'does not include cards that marked as wrong' do
       user.cards.each { |card| card.update(next_training_time: 1.year.from_now) }
-      wrong_card = FactoryGirl.create(:card, :wrong)
-      ready_card = FactoryGirl.create(:card)
+      wrong_card = create(:card, :wrong)
+      ready_card = create(:card)
       user.cards << wrong_card
       user.cards << ready_card
       expect(user.cards.for_training.ids).to eq([ready_card.id])
@@ -92,8 +92,8 @@ describe Card do
 
   describe 'ordered_by_created_at scope' do
     it 'orders cards properly' do
-      newest_card = FactoryGirl.build(:newest_card)
-      oldest_card = FactoryGirl.build(:oldest_card)
+      newest_card = build(:newest_card)
+      oldest_card = build(:oldest_card)
       user.cards << newest_card
       user.cards << oldest_card
       creations = user.cards.ordered_by_created_at.map(&:created_at)

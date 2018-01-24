@@ -1,5 +1,5 @@
 feature 'Training page', js: true do
-  let(:user) { FactoryGirl.create(:default_user) }
+  let(:user) { create(:default_user) }
   let(:cards) { user.cards.for_training }
   let(:cards_ar) { user.cards.reload.to_a.freeze }
 
@@ -118,7 +118,7 @@ feature 'Training page', js: true do
     user.cards.destroy_all
     [3, 5, 8].each do |num|
       num.times do
-        user.cards << FactoryGirl.build(:card, training_interval: num.days)
+        user.cards << build(:card, training_interval: num.days)
       end
     end
     expect(user.cards.reload.count).to eq(3 + 5 + 8)
@@ -137,7 +137,7 @@ feature 'Training page', js: true do
     sorted_intervals = []
     [3, 5, 8].each do |num|
       num.times do
-        user.cards << FactoryGirl.build(:card, :wrong, :not_for_training, training_interval: num.days)
+        user.cards << build(:card, :wrong, :not_for_training, training_interval: num.days)
         sorted_intervals << num.days.to_i
       end
     end
@@ -161,7 +161,7 @@ feature 'Training page', js: true do
   scenario "check that a wrong card doesn't appear twice before others", :skip_visit_page do
     wrong_cards = []
     7.times do
-      card = FactoryGirl.build(:card, :wrong, :not_for_training, next_training_time: 2.days.from_now)
+      card = build(:card, :wrong, :not_for_training, next_training_time: 2.days.from_now)
       user.cards << card
       wrong_cards << card
     end

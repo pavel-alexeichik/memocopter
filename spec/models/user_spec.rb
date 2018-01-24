@@ -1,6 +1,6 @@
 describe User do
   # it "should have valid factory" do
-  #   FactoryGirl.build(:user).should be_valid
+  #   build(:user).should be_valid
   # end
 
   it { is_expected.to have_many(:cards) }

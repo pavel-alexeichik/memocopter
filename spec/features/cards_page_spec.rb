@@ -1,5 +1,5 @@
 feature 'Cards page', js: true do
-  let(:user) { FactoryGirl.create(:default_user) }
+  let(:user) { create(:default_user) }
   before do
     unless self.class.metadata[:skip_before]
       sign_in(user)
@@ -28,7 +28,7 @@ feature 'Cards page', js: true do
   end
 
   scenario 'do not display cards of the other users', skip_before: true do
-    user2 = FactoryGirl.create(:second_user)
+    user2 = create(:second_user)
     expect(user2.reload.cards.count).to be_positive
     sign_in(user)
     visit cards_path
@@ -54,7 +54,7 @@ feature 'Cards page', js: true do
 
     scenario 'with valid data multiple times' do
       2.times do
-        new_card = FactoryGirl.build(:card)
+        new_card = build(:card)
         expect(user.cards.reload.map(&:question)).not_to include(new_card.question)
         within '.new-card-row' do
           fill_in :card_question, with: new_card.question
