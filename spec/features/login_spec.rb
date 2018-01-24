@@ -12,7 +12,7 @@ feature 'Log In', js: true do
   scenario 'cannot login with invalid email' do
     user.email = 'not_working_email@example.com'
     LoginForm.new.visit_page.fill_in_with(user).submit
-    expect(page).to have_content('Incorrect password or email')
+    expect(page).to have_content('Incorrect email or password')
   end
 
   scenario 'log out and try to go to some page' do
