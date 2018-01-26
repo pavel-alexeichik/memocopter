@@ -53,6 +53,26 @@ describe Card do
     end
   end
 
+  describe '.generate' do
+    let(:generated_card) { Card.generate }
+
+    it 'returns new instance of Card' do
+      expect(generated_card).to be_instance_of(Card)
+    end
+
+    it 'returns card with initialized humanized question' do
+      question = generated_card.question
+      expect(question).not_to be_blank
+      expect(question).to eq(question.humanize)
+    end
+
+    it 'returns card with initialized humanized answer' do
+      answer = generated_card.answer
+      expect(answer).not_to be_blank
+      expect(answer).to eq(answer.humanize)
+    end
+  end
+
   describe '.for_training scope' do
     it 'returns cards that have next_training_time slightly greater than now' do
       card.next_training_time = (Card::TRAINING_TIME_OFFSET / 2).seconds.from_now

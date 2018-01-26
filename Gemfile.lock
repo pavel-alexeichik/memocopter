@@ -117,6 +117,7 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
+    ffaker (2.8.1)
     ffi (1.9.18)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -358,6 +359,7 @@ DEPENDENCIES
   devise
   erb2haml
   factory_bot_rails
+  ffaker
   haml-rails
   hirb
   inherited_resources!

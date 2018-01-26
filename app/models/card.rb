@@ -12,6 +12,11 @@ class Card < ApplicationRecord
   scope :where_last_was_wrong, -> { where(last_was_wrong: true) }
   scope :where_last_was_right, -> { where(last_was_wrong: false) }
 
+  def self.generate
+    group = %w(fruit herb_or_spice ingredient meat vegetable).sample
+    Card.new(question: FFaker::Food.send(group).humanize, answer: group.humanize)
+  end
+
   def self.for_training
     offset = TRAINING_TIME_OFFSET.seconds.from_now
     for_training = where('next_training_time <= ?', offset)

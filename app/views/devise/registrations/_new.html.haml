@@ -12,4 +12,4 @@
   .actions
     = f.submit "Sign up", class: 'btn waves-effect waves-light'
     %span &nbsp;or&nbsp;
-    = link_to 'Try as guest', class: 'try-as-guest'
+    = link_to 'Try as guest', try_as_guest_path, class: 'try-as-guest', method: :post

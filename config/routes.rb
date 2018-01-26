@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
     post 'signup', to: 'registrations#create', as: :user_registration
+    post 'try_as_guest', to: 'registrations#try_as_guest', as: :try_as_guest
   end
 
   unauthenticated :user do #-> if user is not logged in

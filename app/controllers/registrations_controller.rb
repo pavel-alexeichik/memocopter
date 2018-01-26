@@ -14,4 +14,9 @@ class RegistrationsController < Devise::RegistrationsController
       return render :json => { success: false, error_messages: resource.errors.full_messages.to_json }
     end
   end
+
+  def try_as_guest
+    sign_in User.create_guest
+    redirect_to dashboard_path
+  end
 end
